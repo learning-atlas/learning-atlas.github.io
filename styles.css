@@ -233,3 +233,10 @@ body{overflow-x:hidden}
   .equilibrium-viz{grid-template-columns:1fr}.eq-center{grid-template-columns:1fr 1fr}.eq-slider{grid-column:1}
   .phase-stages{grid-template-columns:1fr 1fr}.phase-stages span:last-child{grid-column:1/-1}
 }
+
+/* Visual Lab validation status */
+.viz-status{position:absolute;top:10px;right:10px;display:flex;align-items:center;gap:6px;padding:5px 8px;border-radius:999px;background:rgba(255,255,255,.88);border:1px solid var(--line);font-size:.66rem;z-index:8;backdrop-filter:blur(8px)}
+.viz-status span{width:7px;height:7px;border-radius:50%;background:#9aa7b8}
+.viz-status.ok span{background:#2e9d66}.viz-status.error span{background:#c85151}
+.viz-status b{font-weight:850;color:var(--muted)}
+.viz{isolation:isolate}
