@@ -157,3 +157,13 @@ body{overflow-x:hidden}
   .hero-art{transform:none!important;transition:none!important}
   .scroll-progress{transition:none}
 }
+
+/* Expansion and Fusion Lab */
+.navend .avatar{display:none!important}
+.fusion-map{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center;border:1px solid var(--line);background:linear-gradient(145deg,#fff,#f6f8ff);border-radius:26px;padding:26px;box-shadow:var(--shadow)}
+.fusion-path{display:flex;gap:9px;flex-wrap:wrap;align-items:center;justify-content:center}
+.fusion-path span{background:var(--navy);color:#fff;padding:9px 12px;border-radius:999px;font-size:.76rem;font-weight:900;letter-spacing:.06em}
+.fusion-path b{color:#8795a9}
+.fusion-group{margin-bottom:60px}.fusion-group:last-child{margin-bottom:0}
+@media(max-width:900px){.fusion-map{grid-template-columns:1fr}}
+@media(max-width:680px){.fusion-map{padding:18px}.fusion-path{justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap;padding-bottom:5px}.fusion-path span,.fusion-path b{flex:0 0 auto}}
