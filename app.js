@@ -147,7 +147,7 @@ function shortAnswer(id,prompt,answer,reason){
 }
 function practiceTests(){
  const tests=E.practiceTests||{},first=Object.keys(tests)[0]||"A";
- return header("Practice Tests")+'<main><section class="shell innerhero">'+chemCrumbs("Practice Tests")+'<div class="eyebrow"><span class="signal"></span>Interactive practice</div><h1>Practice Tests</h1><p class="lead">Start foundational, move to applied, then Honors. Every question includes a reasoning check after you attempt it.</p></section><section class="shell section"><div class="test-tabs">'+Object.entries(tests).map(([k,t],i)=>'<button class="test-tab '+(i===0?"active":"")+'" data-test="'+k+'"><strong>'+t.title+'</strong><span>'+t.subtitle+'</span></button>').join("")+'</div><div id="testMount" data-current="'+first+'"></div></section></main>'+footer()
+ return header("Practice Tests")+'<main><section class="shell innerhero">'+chemCrumbs("Practice Tests")+'<div class="eyebrow"><span class="signal"></span>Interactive practice</div><h1>Practice Tests</h1><p class="lead">Start foundational, move to applied, then Honors. Or build a custom session around the exact topics, difficulty mix, and grading style you want.</p><div class="actions"><a class="btn primary" href="#/grade-10/chemistry-honors/practice-builder">Build My Practice</a></div></section><section class="shell section"><div class="test-tabs">'+Object.entries(tests).map(([k,t],i)=>'<button class="test-tab '+(i===0?"active":"")+'" data-test="'+k+'"><strong>'+t.title+'</strong><span>'+t.subtitle+'</span></button>').join("")+'</div><div id="testMount" data-current="'+first+'"></div></section></main>'+footer()
 }
 function renderTest(key){
  const t=E.practiceTests[key],mount=$("#testMount");if(!t||!mount)return;
