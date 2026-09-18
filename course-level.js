@@ -167,7 +167,7 @@ const testBlueprints={
   ["Test 6 · AP Fusion","Cross-unit synthesis and exam-style reasoning",{simple:0,medium:5,complex:35,fusion:60}]
  ]
 };
-const curatedTests=(subject,level=storageLevel(subject))=>{const p=pool(subject,level),used=new Set(),bp=testBlueprints[level];const o={};bp.forEach((b,i)=>{o["L"+(i+1)]={title:b[0],subtitle:b[1],questions:choose(p,18,b[2],seedHash(subject+level+i),used)}});return o};
+const curatedTests=(subject,level=storageLevel(subject))=>{const p=pool(subject,level),bp=testBlueprints[level];const o={};bp.forEach((b,i)=>{o["L"+(i+1)]={title:b[0],subtitle:b[1],questions:choose(p,18,b[2],seedHash(subject+level+i),new Set())}});return o};
 const mocks=(subject,level=storageLevel(subject))=>{const p=pool(subject,level),prof=getProfile(subject,level),mix=prof.defaults.levels;const count=level==="ap"?30:24;return {M1:{title:"Mock 1 · Mixed Course",subtitle:"Broad content and representation switching",questions:choose(p,count,mix,seedHash(subject+level+"m1"))},M2:{title:"Mock 2 · Application",subtitle:"Less scaffolding and more transfer",questions:choose(p,count,{simple:level==="cp"?15:5,medium:level==="ap"?20:35,complex:level==="cp"?45:45,fusion:level==="ap"?35:5},seedHash(subject+level+"m2"))},M3:{title:"Mock 3 · Synthesis",subtitle:level==="ap"?"AP-style complex and cross-unit reasoning":"Cumulative challenge and diagnostics",questions:choose(p,count,{simple:level==="cp"?10:0,medium:level==="cp"?35:15,complex:level==="cp"?45:50,fusion:level==="cp"?10:35},seedHash(subject+level+"m3"))}}};
 
 window.LEARNING_ATLAS_LEVELS={version:"1.0",profiles,getLevel:storageLevel,setLevel,getProfile,topicIds,topicAllowed,visuals,pool,curatedTests,mocks,apSupplemental:{chemistry:chemAP.length,math:mathAP.length}};
