@@ -43,3 +43,39 @@ footer{padding:34px 0 44px;color:var(--muted);font-size:.82rem}footer .shell{dis
 @media(max-width:900px){.prep-hero,.resource-panel,.habit-panel{grid-template-columns:1fr}.prep-grid{grid-template-columns:1fr 1fr}.formula-grid,.memory-grid{grid-template-columns:1fr 1fr}.assessment-grid.rich{grid-template-columns:1fr}.topnav{max-width:56vw;overflow-x:auto;white-space:nowrap;scrollbar-width:none}.topnav::-webkit-scrollbar{display:none}}
 @media(max-width:680px){body{font-size:15px}.shell{width:min(100% - 24px,1180px)}.topbar{height:62px;padding:0 12px}.brand>span:last-child{display:none}.navend{gap:6px}.tool-btn{padding:7px 9px}.avatar{display:none}.innerhero{padding-top:30px}.innerhero h1{font-size:clamp(2.7rem,16vw,4.2rem);line-height:.94}.lead{font-size:1rem}.section{padding:44px 0}.prep-grid,.formula-grid,.memory-grid,.test-tabs,.level-tabs{grid-template-columns:1fr}.prep-stats{grid-template-columns:1fr 1fr}.assessment-grid.rich{grid-template-columns:1fr}.topic-card{min-height:220px}.module-head{grid-template-columns:42px 1fr}.module-type{grid-column:2}.learnbox{grid-template-columns:1fr}.answer-row,.submit-row{display:grid;grid-template-columns:1fr}.student-answer,.final-entry{min-width:0;width:100%}.test-head,.challenge-intro{align-items:flex-start;flex-direction:column}.question{padding:14px}.workarea{height:110px}.floating-tools{right:12px;bottom:12px}.tool-drawer{width:100%;border-left:0}.calc-grid{grid-template-columns:repeat(5,1fr)}.crumbs{overflow-x:auto;white-space:nowrap;padding-bottom:4px}.resource-links a{grid-template-columns:1fr auto}.reasoning{justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap}.reasoning span,.reasoning b{flex:0 0 auto}}
 @media(max-width:420px){.prep-stats{grid-template-columns:1fr}.calc-grid button{padding:12px 2px;font-size:.8rem}.floating-tools{font-size:.78rem}.topnav{display:none}.kbd{display:none}}
+
+/* UI stabilization pass: topic cards */
+.topic-card{
+  display:flex;
+  flex-direction:column;
+  min-height:270px;
+}
+.topic-card .module-preview{
+  margin-top:18px;
+  margin-bottom:18px;
+  align-content:flex-start;
+}
+.topic-card .topicfoot{
+  position:static;
+  left:auto;
+  right:auto;
+  bottom:auto;
+  margin-top:auto;
+  padding-top:12px;
+  border-top:1px solid var(--line);
+  min-height:52px;
+}
+.topic-card .roundarrow{
+  flex:0 0 40px;
+}
+.module-preview span{
+  line-height:1.2;
+}
+@media(max-width:900px){
+  .topic-card{min-height:250px}
+}
+@media(max-width:680px){
+  .topic-card{min-height:auto}
+  .topic-card .module-preview{margin-bottom:14px}
+  .topic-card .topicfoot{min-height:46px}
+}
