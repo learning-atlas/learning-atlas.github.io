@@ -1,0 +1,72 @@
+window.LEARNING_ATLAS_DATA={
+"grade":{"id":"grade-10","name":"Grade 10","description":"Subject-level preparation for sophomore year."},
+"subject":{"id":"chemistry-honors","name":"Chemistry Honors","subtitle":"Foundations","description":"Measurement, matter, density, isotopes, electromagnetic radiation, and exam-level reasoning."},
+"topics":[
+{"id":"measurement-matter","name":"Measurement & Matter","description":"Precision, scientific notation, unit analysis, mixtures, and physical versus chemical change.","modules":[
+{"id":"significant-figures","name":"Significant Figures","type":"Measurement","summary":"Read precision from measurements and round results correctly.","learn":"Leading zeros are placeholders. Captive zeros count. Trailing zeros to the right of a decimal count. Multiplication and division use the fewest significant figures.","example":"12.40 cm × 3.2 cm = 39.68 cm² on the calculator, but the reported result is 4.0 × 10¹ cm².","practice":[["How many significant figures are in 0.0045600 L?","5"],["Round 98,650 to 3 significant figures.","9.87 × 10⁴"],["12.340 g divided by 18.2 mL should have how many significant figures?","3"]]},
+{"id":"scientific-notation","name":"Scientific Notation","type":"Measurement","summary":"Represent very large and very small quantities without losing precision.","learn":"Write the number as a coefficient from 1 to 10 multiplied by a power of ten. Preserve intended significant digits.","example":"0.00067200 m = 6.7200 × 10⁻⁴ m.","practice":[["Write 58,900,000 m with 3 significant figures.","5.89 × 10⁷ m"],["Write 0.00000630 in scientific notation.","6.30 × 10⁻⁶"],["Convert 4.50 × 10³ mg to grams.","4.50 g"]]},
+{"id":"dimensional-analysis","name":"Dimensional Analysis","type":"Quantitative","summary":"Build factor-label chains so units cancel cleanly.","learn":"Start with the given quantity. Multiply by conversion factors equal to one and orient them so unwanted units cancel.","example":"55.0 mi/h × 1.609 km/mi × 1000 m/km × 1 h/3600 s = 24.6 m/s.","practice":[["Convert 7.2 × 10⁵ cm to km.","7.2 km"],["A probe travels 7.25 × 10⁵ km in 6.40 days. Find m/s.","1.31 × 10³ m/s"],["Why can 1 day / 86,400 s be used?","It equals 1 exactly."]]},
+{"id":"matter-changes","name":"Matter & Changes","type":"Conceptual","summary":"Classify mixtures and distinguish physical from chemical change.","learn":"Homogeneous mixtures are uniform. Heterogeneous mixtures are not. A physical change preserves chemical identity; a chemical change creates new substances.","example":"Bending copper is physical. A persistent black oxide coating formed in air is chemical.","practice":[["Classify salt water.","Homogeneous mixture"],["A solid dissolves and is recovered unchanged after evaporation. Physical or chemical?","Physical"],["Why can a precipitate indicate chemical change?","A new insoluble substance formed."]]}
+]},
+{"id":"density","name":"Density & Experimental Reasoning","description":"Direct, reverse, displacement, geometry, and error-analysis density problems.","modules":[
+{"id":"density-fundamentals","name":"Density Fundamentals","type":"Quantitative","summary":"Use D = m/V and rearrange the relationship.","learn":"Density is mass divided by volume. Rearrange before substituting: m = DV and V = m/D.","example":"532 g ÷ 59.4 cm³ = 8.96 g/cm³.","practice":[["125 g at 2.50 g/mL. Find volume.","50.0 mL"],["0.800 g/mL × 25.0 mL. Find mass.","20.0 g"],["62.4 g over 8.00 cm³. Find density.","7.80 g/cm³"]]},
+{"id":"water-displacement","name":"Water Displacement","type":"Lab Reasoning","summary":"Determine irregular-object volume from displacement.","learn":"Displaced volume equals final liquid reading minus initial reading. Convert units before using density if needed.","example":"0.468 L − 0.215 L = 0.253 L = 253 cm³.","practice":[["22.5 mL to 28.6 mL. Object volume?","6.1 mL"],["253 cm³ at 8.96 g/cm³. Find mass.","2.27 × 10³ g"],["Object not fully submerged. Density high or low?","Too high"]]},
+{"id":"geometry-density","name":"Geometry + Density","type":"Multi-step","summary":"Combine geometric volume, unit conversion, and density.","learn":"Convert all dimensions to the same unit, calculate geometric volume, then use density.","example":"5.20 cm × 2.40 cm × 18.0 mm becomes 5.20 × 2.40 × 1.80 cm³.","practice":[["Cube side 4.70 cm, mass 0.785 kg. Density?","7.56 g/cm³"],["Why convert mixed length units first?","To avoid inconsistent cubic units."],["Cube volume 50.0 cm³. Edge length?","3.68 cm"]]},
+{"id":"reverse-density","name":"Reverse Density Problems","type":"Multi-step","summary":"Solve backward for mass, volume, or final cylinder reading.","learn":"Solve density algebra first, then perform conversions and any final physical step such as adding displaced volume.","example":"6.540 kg at 11.3 g/cm³ occupies 579 cm³ = 0.579 L.","practice":[["4.80 kg at 6.00 g/cm³. Volume?","0.800 L"],["1.250 L plus 0.579 L displacement. Final?","1.829 L"],["Why rearrange algebra first?","It clarifies the target relationship."]]},
+{"id":"density-error","name":"Experimental Error","type":"Reasoning","summary":"Predict how measurement errors change calculated density.","learn":"If measured volume is too large, density becomes too low. If volume is too small, density becomes too high.","example":"Air bubbles increase apparent volume and make calculated density too low.","practice":[["Rock partly submerged. Density error?","Too high"],["Air bubbles cling to sample. Density error?","Too low"],["Balance reads mass too high. Density error?","Too high"]]}
+]},
+{"id":"isotopes","name":"Atomic Structure & Isotopes","description":"Isotope notation, neutron count, weighted average mass, and inverse isotope algebra.","modules":[
+{"id":"isotope-structure","name":"Isotope Structure","type":"Conceptual","summary":"Connect atomic number, mass number, protons, and neutrons.","learn":"Atomic number equals protons. Mass number equals protons plus neutrons. Isotopes have the same proton count but different neutron counts.","example":"Mass number 81 with 35 protons gives 46 neutrons.","practice":[["Carbon-14 with 6 protons. Neutrons?","8"],["Can isotopes have different proton counts?","No"],["35 protons and mass 79. Neutrons?","44"]]},
+{"id":"weighted-average","name":"Weighted Average Atomic Mass","type":"Quantitative","summary":"Calculate atomic mass from isotope abundances.","learn":"Average atomic mass is the sum of isotope mass × fractional abundance.","example":"10.01 amu at 19.9% and 11.01 amu at 80.1% gives about 10.81 amu.","practice":[["24.0 at 78%, 25.0 at 10%, 26.0 at 12%. Average?","24.34 amu"],["Why is average closest to 24.0?","It is most abundant."],["What must all isotope percentages total?","100%"]]},
+{"id":"missing-abundance","name":"Missing Abundance","type":"Algebra","summary":"Solve two-isotope abundance problems from average atomic mass.","learn":"Let x represent one isotope's fractional abundance and 1 − x the other, then solve the weighted-average equation.","example":"34.97(1−x)+36.97x=35.45 gives x=0.240, or 24.0%.","practice":[["68.93 and 70.92 average to 69.72. Heavier abundance?","39.7%"],["If heavier is 31%, lighter?","69%"],["Why use 1−x?","The two fractions must sum to 1."]]},
+{"id":"missing-mass","name":"Missing Isotope Mass","type":"Algebra","summary":"Solve for an unknown isotope mass in a multi-isotope system.","learn":"Determine any missing abundance first, then solve the weighted-average equation for the unknown mass.","example":"24.305=(23.985)(0.7899)+(24.986)(0.1000)+m(0.1101) gives m≈25.98 amu.","practice":[["Known abundances 90.92% and 0.30%. Third?","8.78%"],["Why solve abundance first?","It is the coefficient of the unknown mass."],["Can average atomic mass lie outside isotope mass range?","No"]]}
+]},
+{"id":"em-radiation","name":"Electromagnetic Radiation","description":"Spectrum relationships, wavelength, frequency, and scientific-notation calculations.","modules":[
+{"id":"spectrum","name":"Spectrum Relationships","type":"Conceptual","summary":"Relate wavelength, frequency, and photon energy.","learn":"Wavelength and frequency are inversely related. Higher frequency means greater photon energy.","example":"6.0 × 10¹⁴ Hz has shorter wavelength and greater energy than 3.0 × 10¹⁰ Hz.","practice":[["Longer wavelength: radio or gamma?","Radio"],["If wavelength doubles, frequency?","Halves"],["Greater photon energy: UV or infrared?","UV"]]},
+{"id":"wavelength-frequency","name":"Wavelength & Frequency","type":"Quantitative","summary":"Use c = λν and rearrange it correctly.","learn":"Use c = λν, where c = 3.00 × 10⁸ m/s. Rearrange before substituting.","example":"λ=7.50×10⁻⁷ m gives ν=4.00×10¹⁴ Hz.","practice":[["ν=6.00×10¹⁴ Hz. Find λ.","5.00 × 10⁻⁷ m"],["λ=3.75×10² m. Find ν.","8.00 × 10⁵ Hz"],["Wavelength 10× larger means frequency?","10× smaller"]]},
+{"id":"em-mixed","name":"Mixed Radiation Problems","type":"Multi-step","summary":"Combine unit conversion, scientific notation, and interpretation.","learn":"Convert wavelength to meters before using c = λν, then convert the result if another unit is requested.","example":"550 nm = 5.50 × 10⁻⁷ m, then ν = c/λ.","practice":[["425 nm to meters?","4.25 × 10⁻⁷ m"],["5.45×10¹⁴ Hz. Wavelength in nm?","550 nm"],["Why not enter 550 directly into c=λν?","It must be converted from nm to m."]]}
+]}
+],
+"openQuestions":[
+["Significant Figures","A balance displays 12.340 g and a cylinder reads 18.2 mL. How many significant figures should the calculated density contain? Explain."],
+["Measurement","Three students report 4.2 cm, 4.20 cm, and 4.200 cm. Are they numerically equal and do they communicate the same precision?"],
+["Dimensional Analysis","Convert 55.0 miles per hour to meters per second using 1 mile = 1.609 km. Show one continuous factor-label chain."],
+["Dimensional Analysis","Without arithmetic, write the conversion-factor orientation needed to convert 7.2 × 10⁵ cm to km and explain the cancellation."],
+["Matter","A copper wire is bent, heated until glowing, then develops a persistent black coating in air. Classify each observation and justify."],
+["Mixtures","Design a separation procedure for gravel, iron filings, salt, and water. Name the physical property used at each step."],
+["Density","A metal sample has mass 212 g and volume 25.0 cm³. Calculate density and compare it with copper at 8.96 g/cm³."],
+["Density Error","A porous rock traps air bubbles during displacement. Predict the direction of the density error and explain."],
+["Density Layers","Liquids have densities 0.79, 1.00, and 1.26 g/mL. A solid is 1.10 g/cm³. Predict where the solid rests."],
+["Reverse Density","A 250 g cube is made from a material of density 5.00 g/cm³. Find volume and edge length."],
+["Geometry + Density","A cube has side 4.70 cm and mass 0.785 kg. Determine density with correct significant figures."],
+["Displacement","Water rises from 0.215 L to 0.468 L when a metal is submerged. If density is 8.96 g/cm³, find mass."],
+["Reverse Displacement","A 6.540 kg block has density 11.3 g/cm³ and is placed into 1.250 L of water. Find final reading."],
+["Isotopes","An isotope has mass number 81 and 35 protons. Determine neutrons and explain what changes in the mass-79 isotope."],
+["Weighted Average","Calculate average atomic mass for 24.0 amu at 78.0%, 25.0 amu at 10.0%, and 26.0 amu at 12.0%."],
+["Data Validation","A student lists isotope abundances 42.5%, 37.0%, and 25.5%. What must be corrected before calculation?"],
+["Missing Abundance","Element X has isotopes 34.97 and 36.97 amu with average mass 35.45 amu. Find the heavier-isotope abundance."],
+["Missing Mass","Three isotopes are 23.985 amu at 78.99%, 24.986 amu at 10.00%, and unknown at 11.01%. Average mass 24.305 amu. Find unknown mass."],
+["EM Radiation","Wave A is 3.0 × 10¹⁰ Hz and Wave B is 6.0 × 10¹⁴ Hz. Compare wavelength and photon energy without calculating wavelength."],
+["EM Calculation","A wave has frequency 5.45 × 10¹⁴ Hz. Find wavelength in meters and nanometers."],
+["Error Analysis","A student rounds every intermediate conversion to one significant figure. Explain why the final result can be inaccurate."],
+["Experimental Design","Describe a method to determine the density of an irregular metal object using a balance, water, and a graduated cylinder."],
+["Reasonableness","A student calculates aluminum density as 270 g/cm³. Explain why the result should trigger a setup check."],
+["Synthesis","Write a seven-step checklist for solving an unfamiliar quantitative chemistry word problem, including units, significant figures, and reasonableness."]
+],
+"mockQuestions":[
+["Precision","A technician records 0.0030400 kg. How many significant figures are present? Explain the zeros."],
+["Scientific Notation","Write 0.00067200 m in scientific notation while preserving all significant figures."],
+["Sig Figs","A student reports 12.40 × 3.2 = 39.68 cm². Correct the final reporting."],
+["Measurement","Two balances display 8.4 g and 8.400 g. Which is more precise and why?"],
+["Rounding","Round 98,650 to 3 significant figures in unambiguous notation."],
+["Conversion","A truck travels 125 miles in 2.50 hours. Convert average speed to m/s using 1 mile = 1.609 km."],
+["Density ID","A metal sphere has mass 532 g and volume 59.4 cm³. Calculate density and identify the closest material among iron 7.87, nickel 8.90, copper 8.96 g/cm³."],
+["Experimental Error","A rock is not fully submerged during displacement. Predict whether calculated density is high or low."],
+["Reverse Density","A 4.80 kg block has density 6.00 g/cm³. Determine volume in liters and whether it fits inside 750 mL."],
+["Weighted Average","Isotopes are 10.01 amu at 19.9% and 11.01 amu at 80.1%. Calculate average atomic mass."],
+["Isotope Algebra","Isotopes are 62.93 and 64.93 amu with average 63.55 amu. Find heavier-isotope abundance."],
+["EM","A wave has wavelength 7.50 × 10⁻⁷ m. Calculate frequency and compare photon energy with a 2.50 × 10⁻⁷ m wave."],
+["Chemical Reasoning","A white powder dissolves and is recovered by evaporation. A second sample decomposes on heating into a gas and different-colored solid. Classify changes."],
+["Mixture Separation","Design a complete procedure to recover iron filings, sand, salt, and water from a mixture."],
+["Outlier Analysis","Density trials are 7.82, 7.79, and 9.21 g/cm³. Explain what should happen before averaging and propose one plausible experimental cause."]
+]};
