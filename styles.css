@@ -604,3 +604,41 @@ body{overflow-x:hidden}
 @media(max-width:900px){.level-context{grid-template-columns:1fr}.level-context-metrics{grid-template-columns:1fr 1fr 1fr}.course-level{grid-template-columns:1fr}.course-level-copy{min-width:0}.auto-defaults{grid-template-columns:1fr 1fr}}
 @media(max-width:680px){.course-level-options{grid-template-columns:1fr}.course-level-options button{text-align:center}.level-context-metrics{grid-template-columns:1fr}.visual-level-note{width:min(100% - 24px,1180px);grid-template-columns:auto 1fr}.visual-level-note p{grid-column:1/-1}.auto-defaults{grid-template-columns:1fr 1fr}.level-subject-card .course-level-options{grid-template-columns:1fr}}
 @media(max-width:420px){.auto-defaults{grid-template-columns:1fr}}
+
+/* Grade 10 level insight comparison */
+.grade-subject-stack{display:grid;gap:22px}
+.grade-subject-overview{border:1px solid var(--line);border-radius:26px;padding:24px;background:#fff;box-shadow:0 14px 34px rgba(31,50,82,.055)}
+.chemistry-overview{background:radial-gradient(circle at 94% 8%,rgba(91,127,210,.09),transparent 30%),#fff}
+.mathematics-overview{background:radial-gradient(circle at 94% 8%,rgba(120,91,202,.10),transparent 30%),#fff}
+.grade-subject-overview-head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:22px;align-items:start;margin-bottom:18px}
+.grade-subject-overview-head h3{font-size:clamp(1.8rem,3vw,2.6rem);margin:5px 0 7px}
+.grade-subject-overview-head p{max-width:700px;margin:0;color:var(--muted);line-height:1.55}
+.grade-subject-stats{display:grid;grid-template-columns:repeat(3,minmax(90px,1fr));gap:8px}
+.grade-subject-stats span{display:block;border:1px solid var(--line);border-radius:13px;padding:10px;background:rgba(255,255,255,.82)}
+.grade-subject-stats strong,.grade-subject-stats small{display:block}
+.grade-subject-stats strong{font-size:1.05rem;color:var(--navy)}
+.grade-subject-stats small{font-size:.58rem;color:var(--muted);margin-top:3px}
+.grade-level-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.grade-level-insight{border:1px solid var(--line);border-radius:17px;padding:14px;background:#fafbfd;min-width:0}
+.grade-level-insight.cp{border-top:3px solid #6f9bd0}
+.grade-level-insight.honors{border-top:3px solid #6f78cf}
+.grade-level-insight.ap{border-top:3px solid #8d63c8;background:linear-gradient(145deg,#fbfaff,#f7f3ff)}
+.grade-level-head{display:grid;gap:4px}
+.grade-level-head span{font-size:.56rem;font-weight:900;letter-spacing:.1em;color:#7f8a99}
+.grade-level-head strong{font-size:.92rem;color:#22314d}
+.grade-level-insight p{font-size:.7rem;line-height:1.45;color:var(--muted);min-height:62px;margin:9px 0 12px}
+.grade-level-facts{display:grid;gap:6px}
+.grade-level-facts span{display:grid;grid-template-columns:72px 1fr;gap:8px;align-items:center;padding-top:6px;border-top:1px solid #e6eaf0}
+.grade-level-facts small{font-size:.5rem;letter-spacing:.07em;font-weight:900;color:#929dab}
+.grade-level-facts b{font-size:.65rem;color:#3d4b61}
+.grade-open-subject{margin-top:18px}
+@media(max-width:950px){
+  .grade-subject-overview-head{grid-template-columns:1fr}
+  .grade-level-grid{grid-template-columns:1fr}
+  .grade-level-insight p{min-height:0}
+}
+@media(max-width:620px){
+  .grade-subject-overview{padding:16px}
+  .grade-subject-stats{grid-template-columns:1fr 1fr 1fr}
+  .grade-open-subject{width:100%;justify-content:center}
+}
