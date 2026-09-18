@@ -106,7 +106,7 @@ function renderTest(key){
  bindTest(key)
 }
 function bindTest(key){
- $$$$(".check-one").forEach(b=>b.onclick=()=>checkOne(key,+b.dataset.index));
+ $$(".check-one").forEach(b=>b.onclick=()=>checkOne(key,+b.dataset.index));
  $("#gradeTest")?.addEventListener("click",()=>gradeTest(key));$("#resetTest")?.addEventListener("click",()=>renderTest(key));bindDynamic()
 }
 function checkOne(key,i){
@@ -156,22 +156,22 @@ function palette(){
 }
 function notfound(){return header()+'<main class="shell innerhero"><h1>Not found</h1><a class="btn" href="#/">Return home</a></main>'+footer()}
 function bindDynamic(){
- $$$(".hint-btn").forEach(b=>b.onclick=()=>{const card=b.closest(".short-q");const p=card?.querySelector('[data-hint-panel="'+b.dataset.hint+'"]');if(p)p.classList.toggle("show")});
- $("#formulaSearch")?.addEventListener("input",e=>{const q=e.target.value.toLowerCase().trim();$$$(".vault-card").forEach(c=>c.hidden=q&&!c.dataset.search.includes(q))});
+ $$(".hint-btn").forEach(b=>b.onclick=()=>{const card=b.closest(".short-q");const p=card?.querySelector('[data-hint-panel="'+b.dataset.hint+'"]');if(p)p.classList.toggle("show")});
+ $("#formulaSearch")?.addEventListener("input",e=>{const q=e.target.value.toLowerCase().trim();$$(".vault-card").forEach(c=>c.hidden=q&&!c.dataset.search.includes(q))});
 
- $$$$(".reveal-reasoning").forEach(b=>b.onclick=()=>b.closest(".short-q,.mcq,.workbench")?.querySelector(".reasoning-panel")?.classList.toggle("show"));
- $$$$(".scratch-toggle").forEach(b=>b.onclick=()=>$("#scratch-"+b.dataset.scratch)?.classList.toggle("show"));
- $$$$("[data-note]").forEach(t=>t.addEventListener("input",()=>store.set("note:"+t.dataset.note,t.value)));
- $$$$(".save-answer").forEach(b=>b.onclick=()=>{const input=$('[data-save="'+b.dataset.key+'"]');if(input){store.set("answer:"+b.dataset.key,input.value);b.textContent="Saved"}});
- $$$$("[data-save]").forEach(i=>i.value=store.get("answer:"+i.dataset.save,i.value||""));
- $$$$(".save-work").forEach(b=>b.onclick=()=>{const input=$('[data-final="'+b.dataset.key+'"]');if(input){store.set("final:"+b.dataset.key,input.value);b.textContent="Saved"}});
+ $$(".reveal-reasoning").forEach(b=>b.onclick=()=>b.closest(".short-q,.mcq,.workbench")?.querySelector(".reasoning-panel")?.classList.toggle("show"));
+ $$(".scratch-toggle").forEach(b=>b.onclick=()=>$("#scratch-"+b.dataset.scratch)?.classList.toggle("show"));
+ $$("[data-note]").forEach(t=>t.addEventListener("input",()=>store.set("note:"+t.dataset.note,t.value)));
+ $$(".save-answer").forEach(b=>b.onclick=()=>{const input=$('[data-save="'+b.dataset.key+'"]');if(input){store.set("answer:"+b.dataset.key,input.value);b.textContent="Saved"}});
+ $$("[data-save]").forEach(i=>i.value=store.get("answer:"+i.dataset.save,i.value||""));
+ $$(".save-work").forEach(b=>b.onclick=()=>{const input=$('[data-final="'+b.dataset.key+'"]');if(input){store.set("final:"+b.dataset.key,input.value);b.textContent="Saved"}});
 }
 
 function bindVisualLab(){
  const density=$('[data-viz-control="density"]');if(density){const update=()=>{const v=+density.value;$("#densityVol").textContent=v+" cm³";$("#densityOut").textContent=(100/v).toFixed(2)+" g/cm³";$("#densityBlock").style.transform="scaleX("+Math.max(.48,1.25-v/160)+")"};density.addEventListener("input",update);update()}
- $$$$('[data-animate="displacement"]').forEach(b=>b.addEventListener("click",()=>{const v=b.closest(".displacement-viz");v?.classList.toggle("active");b.textContent=v?.classList.contains("active")?"Reset object":"Drop object"}));
- $$$$('[data-animate="sigfig"]').forEach(b=>b.addEventListener("click",()=>{const n=$("#sigNumber");n?.classList.add("scanning");$("#sigCaption").textContent="Leading zeros are placeholders. The digits 4, 5, 6, 0, 0 are significant.";setTimeout(()=>n?.classList.remove("scanning"),1600)}));
- $$$$('[data-reset-viz="sigfig"]').forEach(b=>b.addEventListener("click",()=>{$("#sigNumber")?.classList.remove("scanning");$("#sigCaption").textContent="Press Scan digits to see which digits count."}));
+ $$('[data-animate="displacement"]').forEach(b=>b.addEventListener("click",()=>{const v=b.closest(".displacement-viz");v?.classList.toggle("active");b.textContent=v?.classList.contains("active")?"Reset object":"Drop object"}));
+ $$('[data-animate="sigfig"]').forEach(b=>b.addEventListener("click",()=>{const n=$("#sigNumber");n?.classList.add("scanning");$("#sigCaption").textContent="Leading zeros are placeholders. The digits 4, 5, 6, 0, 0 are significant.";setTimeout(()=>n?.classList.remove("scanning"),1600)}));
+ $$('[data-reset-viz="sigfig"]').forEach(b=>b.addEventListener("click",()=>{$("#sigNumber")?.classList.remove("scanning");$("#sigCaption").textContent="Press Scan digits to see which digits count."}));
  const iso=$('[data-viz-control="isotope"]');if(iso){const update=()=>{const p=+iso.value;$("#isoPct").textContent=p+"%";$("#isoAvg").textContent=(35*(1-p/100)+37*(p/100)).toFixed(2)+" amu";$("#isoNeedle").style.left=p+"%"};iso.addEventListener("input",update);update()}
  const wave=$('[data-viz-control="wave"]');if(wave){const draw=()=>{const n=+wave.value;let d="M0 65";for(let x=0;x<=520;x+=4){const y=65+38*Math.sin((x/520)*Math.PI*2*n);d+=" L"+x+" "+y}$("#wavePath").setAttribute("d",d);$("#waveCaption").textContent="Relative frequency "+n+"×. More cycles in the same distance means shorter wavelength."};wave.addEventListener("input",draw);draw()}
  const solute=$('[data-viz-control="solute"]'),vol=$('[data-viz-control="volume"]');if(solute&&vol){const update=()=>{const n=+solute.value,v=+vol.value;$("#molSolution").style.height=v+"%";$("#molParticles").innerHTML=Array.from({length:n},(_,i)=>'<i style="--x:'+((i*41)%78+10)+'%;--y:'+((i*29)%Math.max(30,v-10)+8)+'%"></i>').join("");$("#molCaption").textContent="Relative concentration: "+(n/v*10).toFixed(2)+" units"};solute.addEventListener("input",update);vol.addEventListener("input",update);update()}
@@ -190,8 +190,8 @@ function calcEvaluate(raw){
 }
 function bindTools(){
  $("#floatingTools")?.addEventListener("click",()=>$("#toolDrawer")?.classList.add("open"));$("#toolBtn")?.addEventListener("click",()=>$("#toolDrawer")?.classList.add("open"));$("#closeTools")?.addEventListener("click",()=>$("#toolDrawer")?.classList.remove("open"));
- $$$$("[data-tooltab]").forEach(b=>b.onclick=()=>{$$$$("[data-tooltab]").forEach(x=>x.classList.toggle("active",x===b));$$$$("[data-pane]").forEach(p=>p.classList.toggle("active",p.dataset.pane===b.dataset.tooltab))});
- $$$$("[data-calc]").forEach(b=>b.onclick=()=>{const i=$("#calcInput");if(i)i.value+=b.dataset.calc});
+ $$("[data-tooltab]").forEach(b=>b.onclick=()=>{$$("[data-tooltab]").forEach(x=>x.classList.toggle("active",x===b));$$("[data-pane]").forEach(p=>p.classList.toggle("active",p.dataset.pane===b.dataset.tooltab))});
+ $$("[data-calc]").forEach(b=>b.onclick=()=>{const i=$("#calcInput");if(i)i.value+=b.dataset.calc});
  $("#calcClear")?.addEventListener("click",()=>{$("#calcInput").value="";$("#calcOutput").textContent="Ready"});
  $("#calcEquals")?.addEventListener("click",()=>{try{$("#calcOutput").textContent=String(calcEvaluate($("#calcInput").value))}catch{$("#calcOutput").textContent="Check expression"}});
  $("#saveGlobalNotes")?.addEventListener("click",()=>store.set("globalNotes",$("#globalNotes").value));$("#clearGlobalNotes")?.addEventListener("click",()=>{$("#globalNotes").value="";store.set("globalNotes","")});
@@ -203,10 +203,10 @@ function bindTimer(){
 }
 function bind(){
  $("#cmdBtn")?.addEventListener("click",()=>$("#palette")?.classList.add("open"));
- $$$$("[data-module]").forEach(h=>h.onclick=()=>h.closest(".module-row").classList.toggle("open"));
+ $$("[data-module]").forEach(h=>h.onclick=()=>h.closest(".module-row").classList.toggle("open"));
  $("#palette")?.addEventListener("click",e=>{if(e.target.id==="palette")e.currentTarget.classList.remove("open")});
- $$$$(".test-tab").forEach(b=>b.onclick=()=>{$$$$(".test-tab").forEach(x=>x.classList.toggle("active",x===b));renderTest(b.dataset.test)});
- $$$$(".level-tab").forEach(b=>b.onclick=()=>{$$$$(".level-tab").forEach(x=>x.classList.toggle("active",x===b));renderChallenge(+b.dataset.level)});
+ $$(".test-tab").forEach(b=>b.onclick=()=>{$$(".test-tab").forEach(x=>x.classList.toggle("active",x===b));renderTest(b.dataset.test)});
+ $$(".level-tab").forEach(b=>b.onclick=()=>{$$(".level-tab").forEach(x=>x.classList.toggle("active",x===b));renderChallenge(+b.dataset.level)});
  bindDynamic();bindTools();bindTimer();bindVisualLab();enhanceScrollExperience()
 }
 
@@ -245,7 +245,7 @@ function enhanceScrollExperience(){
   window.__atlasScrollHandler=onScroll;
   window.addEventListener('scroll',onScroll,{passive:true});update();
 
-  $$$$('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
+  $$('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
     const href=a.getAttribute('href');
     if(!href || href.startsWith('#/')) return;
     const target=document.querySelector(href);
