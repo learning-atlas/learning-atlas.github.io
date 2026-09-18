@@ -1,0 +1,402 @@
+(function(){
+const E=window.LEARNING_ATLAS_ENHANCEMENTS, M=window.LEARNING_ATLAS_MATH;
+const Q=(q,options,answer,why,topic="")=>({q,options,answer,why,topic});
+const test=(title,subtitle,questions)=>({title,subtitle,questions});
+const num=(x,d=2)=>Number(x.toFixed(d)).toString();
+
+/* ---------- CHEMISTRY: 6 x 18 = 108 questions ---------- */
+const chemA=[
+Q("How many significant figures are in 0.0045600?",["3","4","5","6"],2,"Leading zeros do not count; 4,5,6 and both trailing decimal zeros do.","Measurement"),
+Q("Which conversion is exact?",["1 in = 2.54 cm","1 lb = 450 g","1 L = 1001 mL","1 km = 999 m"],0,"The inch-centimeter relationship is defined exactly.","Measurement"),
+Q("A 20.0 g sample occupies 5.00 mL. Density?",["0.250 g/mL","4.00 g/mL","25.0 g/mL","100 g/mL"],1,"D=m/V=20.0/5.00=4.00 g/mL.","Density"),
+Q("An object raises water from 32.0 mL to 47.5 mL. Volume?",["15.5 mL","32.0 mL","47.5 mL","79.5 mL"],0,"Displacement volume is final minus initial.","Density"),
+Q("Which particle determines element identity?",["electron","neutron","proton","isotope mass"],2,"Atomic number equals number of protons.","Atomic structure"),
+Q("An isotope has 17 protons and mass number 37. Neutrons?",["17","20","37","54"],1,"n=A−p=37−17=20.","Atomic structure"),
+Q("If wavelength increases, frequency at constant c generally?",["increases","decreases","stays same","becomes zero"],1,"c=λν, so λ and ν are inversely related.","EM radiation"),
+Q("Which has the shortest wavelength?",["radio","microwave","visible","gamma"],3,"Gamma radiation has the shortest wavelength among these.","EM radiation"),
+Q("One mole contains approximately?",["6.022×10²³ particles","3.00×10⁸ particles","9.81 particles","1.00×10³ particles"],0,"Avogadro's number is 6.022×10²³ mol⁻¹.","Mole"),
+Q("Molar mass of H₂O is closest to?",["10 g/mol","18 g/mol","32 g/mol","36 g/mol"],1,"2(1.008)+16.00≈18.02 g/mol.","Mole"),
+Q("Formula for magnesium chloride?",["MgCl","MgCl₂","Mg₂Cl","Mg₂Cl₂"],1,"Mg²⁺ needs two Cl⁻ ions.","Nomenclature"),
+Q("Name CO₂.",["carbon oxide","carbon dioxide","cobalt oxide","dicarbon oxide"],1,"Molecular prefixes give carbon dioxide.","Nomenclature"),
+Q("Bonding in NaCl is primarily?",["ionic","metallic","nonpolar covalent","hydrogen"],0,"Na⁺ and Cl⁻ are held by electrostatic attraction.","Bonding"),
+Q("Water is polar mainly because it has?",["equal bonds only","a bent geometry and polar O-H bonds","metal ions","no lone pairs"],1,"Bond dipoles do not cancel in bent H₂O.","Bonding"),
+Q("Most compressible state of matter?",["solid","liquid","gas","plasma only"],2,"Gas particles are widely separated.","States of matter"),
+Q("During ideal melting, temperature usually?",["rises rapidly","falls","stays nearly constant","doubles"],2,"Energy goes into changing phase rather than kinetic energy.","States of matter"),
+Q("Strong electrolyte solutions conduct because they contain?",["mobile ions","only neutral molecules","solid crystals","photons"],0,"Dissolved ions carry charge.","Solutions"),
+Q("Which is generally nonpolar and poorly soluble in water?",["NaCl","ethanol","oil","HCl"],2,"Oil is largely nonpolar while water is polar.","Solubility")
+];
+const chemB=[
+Q("250 mL equals how many liters?",["0.0250","0.250","2.50","250"],1,"Divide mL by 1000.","Units"),
+Q("A metal has density 8.0 g/cm³ and volume 3.0 cm³. Mass?",["2.7 g","5.0 g","11 g","24 g"],3,"m=DV=8.0×3.0=24 g.","Density"),
+Q("Average atomic mass lies closest to which isotope?",["always lightest","always heaviest","usually most abundant","never abundant"],2,"Weighted mean is pulled toward the most abundant isotope.","Isotopes"),
+Q("For c=λν, λ=6.0×10⁻⁷ m gives ν closest to?",["5.0×10¹⁴ Hz","1.8×10² Hz","2.0×10⁻¹⁵ Hz","5.0×10⁸ Hz"],0,"ν=3.0×10⁸ / 6.0×10⁻⁷=5.0×10¹⁴ Hz.","EM radiation"),
+Q("0.50 mol CO₂ contains how many CO₂ molecules?",["3.01×10²³","6.02×10²³","1.20×10²⁴","0.50"],0,"0.50×6.022×10²³≈3.01×10²³.","Mole"),
+Q("36.0 g H₂O is about how many moles?",["1.00","2.00","18.0","36.0"],1,"36.0/18.0≈2.00 mol.","Mole"),
+Q("Balanced coefficients in 2H₂+O₂→2H₂O tell you?",["mass ratio directly","mole ratio","density ratio","charge only"],1,"Coefficients are stoichiometric mole ratios.","Stoichiometry"),
+Q("From 3 mol O₂, moles H₂O possible in 2H₂+O₂→2H₂O?",["1.5","3","6","9"],2,"1 mol O₂ produces 2 mol H₂O.","Stoichiometry"),
+Q("Molarity of 0.50 mol solute in 2.0 L solution?",["0.25 M","0.50 M","1.0 M","4.0 M"],0,"M=n/V=0.50/2.0=0.25 M.","Solutions"),
+Q("Diluting a solution by adding water changes solute moles?",["increases","decreases","stays same","becomes zero"],2,"Dilution changes volume and concentration, not solute amount.","Solutions"),
+Q("At constant temperature, decreasing gas volume causes pressure to?",["decrease","increase","stay fixed","become negative"],1,"Boyle's law gives inverse P-V relation.","Gases"),
+Q("Gas-law temperature ratios should use?",["°C","°F","K","any scale"],2,"Kelvin is an absolute scale.","Gases"),
+Q("q=mcΔT. If ΔT is positive for the object, q is usually?",["positive","negative","zero","undefined"],0,"Positive ΔT means the object absorbed heat under this sign convention.","Thermochemistry"),
+Q("A catalyst changes primarily the?",["ΔH","activation energy","equilibrium constant","product identity"],1,"Catalysts provide a lower-Ea pathway.","Kinetics"),
+Q("At dynamic equilibrium, forward and reverse?",["stop","have equal rates","have equal concentrations","have zero rates"],1,"Rates equal while reactions continue.","Equilibrium"),
+Q("If Q<K, reaction tends to shift?",["left","right","nowhere","randomly"],1,"Q<K means more products form to approach K.","Equilibrium"),
+Q("pH 3 has how many times more H⁺ than pH 5?",["2×","10×","100×","1000×"],2,"Two pH units correspond to 10²=100×.","Acid-base"),
+Q("Oxidation means?",["gain of electrons","loss of electrons","gain of protons only","no charge change"],1,"OIL: Oxidation Is Loss of electrons.","Redox")
+];
+const chemC=[
+Q("A 15.0 g object displaces 5.00 mL. Density?",["0.333","3.00","20.0","75.0"],1,"15.0/5.00=3.00 g/mL.","Density"),
+Q("Experimental density 7.80 vs accepted 8.00 g/mL. Percent error?",["0.025%","2.5%","20%","97.5%"],1,"|7.80−8.00|/8.00×100=2.5%.","Lab data"),
+Q("An isotope mix is 75% mass 10 and 25% mass 12. Average?",["10.0","10.5","11.0","11.5"],1,"0.75(10)+0.25(12)=10.5.","Isotopes"),
+Q("Which change raises photon energy?",["longer wavelength","lower frequency","higher frequency","slower light speed"],2,"E=hν, so higher frequency means higher photon energy.","EM radiation"),
+Q("2.0 mol NaCl contains formula units closest to?",["3.01×10²³","6.02×10²³","1.20×10²⁴","2"],2,"2×6.022×10²³≈1.20×10²⁴.","Mole"),
+Q("For N₂+3H₂→2NH₃, 4 mol N₂ needs H₂?",["4","6","8","12"],3,"3 mol H₂ per 1 mol N₂: 4×3=12.","Stoichiometry"),
+Q("10 mol H₂ with excess N₂ yields NH₃?",["3.33 mol","5.0 mol","6.67 mol","20 mol"],2,"10×(2/3)=6.67 mol.","Stoichiometry"),
+Q("If theoretical yield is 20 g and actual 15 g, percent yield?",["25%","75%","100%","133%"],1,"15/20×100=75%.","Yield"),
+Q("50.0 mL of 2.0 M diluted to 200 mL gives?",["0.25 M","0.50 M","1.0 M","8.0 M"],1,"M₂=M₁V₁/V₂=2.0×50/200=0.50 M.","Solutions"),
+Q("At constant pressure, a gas warmed from 300 K to 330 K changes volume by factor?",["0.91","1.00","1.10","30"],2,"V₂/V₁=T₂/T₁=330/300=1.10.","Gases"),
+Q("100 g water, c=4.184 J/g°C, ΔT=5°C absorbs?",["20.9 J","418 J","2092 J","4184 J"],2,"q=100×4.184×5=2092 J.","Thermochemistry"),
+Q("Powder reacts faster than a chunk mainly due to?",["higher molar mass","greater surface area","lower density","different element"],1,"More exposed surface increases collision opportunities.","Kinetics"),
+Q("Adding product to an equilibrium usually shifts?",["toward products","toward reactants","never shifts","changes K"],1,"System tends to consume some added product.","Equilibrium"),
+Q("[H⁺]=1×10⁻⁴ M gives pH?",["2","4","10","14"],1,"pH=−log(10⁻⁴)=4.","Acid-base"),
+Q("At equivalence in a 1:1 strong acid-base titration?",["moles acid = moles base","volumes always equal","pH always 1","no ions remain"],0,"Stoichiometric moles are equal for a 1:1 reaction.","Acid-base"),
+Q("In Zn+Cu²⁺→Zn²⁺+Cu, Zn is?",["reduced","oxidized","spectator","catalyst"],1,"Zn loses electrons, so it is oxidized.","Redox"),
+Q("In a galvanic cell, electrons flow?",["cathode→anode","anode→cathode","through salt bridge only","nowhere"],1,"Electrons leave oxidation at anode and reach cathode.","Electrochem"),
+Q("Half-life 3 h: 80 g becomes after 6 h?",["10 g","20 g","40 g","60 g"],1,"Two half-lives: 80→40→20.","Nuclear")
+];
+const chemD=[
+Q("A cube edge 2.00 cm, mass 64.0 g. Density?",["4.00","8.00","16.0","32.0"],1,"V=8.00 cm³; D=64.0/8.00=8.00 g/cm³.","Density"),
+Q("A density experiment contains trapped air bubbles in measured volume. Calculated density becomes?",["too high","too low","unchanged","negative"],1,"Volume is overestimated, so m/V is too low.","Lab reasoning"),
+Q("Isotopes 24 amu (79%) and 26 amu (21%) average?",["24.00","24.42","25.00","25.58"],1,"24(.79)+26(.21)=24.42.","Isotopes"),
+Q("400 nm light vs 800 nm light: frequency ratio ν400/ν800?",["0.5","1","2","4"],2,"Frequency is inversely proportional to wavelength.","EM radiation"),
+Q("12.0 g C is about 1.00 mol. Atoms?",["6.02×10²²","6.02×10²³","1.20×10²⁴","12"],1,"One mole contains Avogadro's number of atoms.","Mole"),
+Q("For 2Al+3Cl₂→2AlCl₃, 5 mol Al with 6 mol Cl₂: limiting reactant?",["Al","Cl₂","AlCl₃","none"],1,"5 mol Al needs 7.5 mol Cl₂, but only 6 available.","Stoichiometry"),
+Q("Using 6 mol Cl₂ in that reaction gives AlCl₃?",["2 mol","4 mol","6 mol","9 mol"],1,"6×(2/3)=4 mol AlCl₃.","Stoichiometry"),
+Q("Prepare 0.100 mol NaCl in 500 mL solution. Molarity?",["0.050 M","0.100 M","0.200 M","5.00 M"],2,"0.100/0.500=0.200 M.","Solutions"),
+Q("25 mL 4.0 M stock to make 0.50 M final. Final volume?",["50 mL","100 mL","200 mL","320 mL"],2,"V₂=M₁V₁/M₂=4×25/.5=200 mL.","Solutions"),
+Q("Gas at 2.0 L, 300 K warms to 450 K at constant P. New V?",["1.0 L","2.0 L","3.0 L","4.5 L"],2,"V₂=2×450/300=3.0 L.","Gases"),
+Q("A 50 g metal c=0.40 J/g°C cools 20°C. q?",["−400 J","−40 J","+400 J","+1000 J"],0,"q=50×0.40×(−20)=−400 J.","Thermochemistry"),
+Q("Catalyst added to equilibrium system. Equilibrium position?",["shifts right","shifts left","unchanged","K doubles"],2,"Catalyst speeds both directions and does not change K.","Equilibrium"),
+Q("If Q>K, net reaction proceeds?",["right","left","both equally already","cannot know"],1,"Too much product relative to equilibrium means shift left.","Equilibrium"),
+Q("pH 2 solution diluted tenfold ideally becomes near pH?",["1","2","3","12"],2,"[H⁺] drops tenfold, so pH rises by 1.","Acid-base"),
+Q("A buffer primarily resists changes in?",["mass","pH","temperature","pressure"],1,"Buffers consume added acid/base and limit pH change.","Acid-base"),
+Q("Oxidation number of O in most compounds?",["+2","0","−1","−2"],3,"Oxygen is usually −2 outside special exceptions.","Redox"),
+Q("ΔG<0 indicates process is?",["thermodynamically favorable","necessarily fast","at equilibrium only","impossible"],0,"Negative ΔG signals thermodynamic favorability, not speed.","Free energy"),
+Q("Alpha emission changes A and Z by?",["−4,−2","−2,−4","+4,+2","0,+1"],0,"An alpha particle is ⁴₂He.","Nuclear")
+];
+const chemE=[
+Q("A student reports 12.34567 g from a balance readable to 0.01 g. Best critique?",["too few digits","too many justified digits","units wrong","mass impossible"],1,"Instrument resolution does not support all reported digits.","Measurement"),
+Q("A line of mass vs volume has slope 7.9 g/mL. Slope represents?",["density","molarity","pressure","temperature"],0,"m=DV, so slope Δm/ΔV is density.","Lab data"),
+Q("Element X has atomic number 12. Likely valence electrons for group 2?",["1","2","6","8"],1,"Group 2 elements typically have two valence electrons.","Periodic"),
+Q("Atomic radius generally changes left→right across a period how?",["increases","decreases","unchanged","random"],1,"Increasing effective nuclear charge generally pulls electrons closer.","Periodic"),
+Q("Formula from Al³⁺ and O²⁻?",["AlO","Al₂O","AlO₃","Al₂O₃"],3,"Charges balance at 2 Al and 3 O.","Nomenclature"),
+Q("Which molecule is nonpolar overall despite polar bonds?",["H₂O","NH₃","CO₂","SO₂"],2,"Linear CO₂ bond dipoles cancel.","Bonding"),
+Q("Hydrogen bonding is especially important in?",["CH₄","H₂O","CO₂","NaCl(s)"],1,"O-H bonds enable strong hydrogen bonding.","IMF"),
+Q("At boiling plateau, average kinetic energy of particles roughly?",["increases rapidly","stays roughly constant","drops to zero","becomes negative"],1,"Temperature, hence average kinetic energy, stays nearly constant during phase change.","States"),
+Q("Ag⁺ + Cl⁻ in water commonly forms?",["AgCl(s) precipitate","Ag gas","Cl₂ always","nothing"],0,"AgCl is poorly soluble and precipitates.","Solubility"),
+Q("Increasing concentration usually raises reaction rate because?",["collisions are more frequent","Ea rises","K changes","products vanish"],0,"More particles per volume increases collision frequency.","Kinetics"),
+Q("At equilibrium, concentrations are?",["always equal","constant but not necessarily equal","zero","always 1 M"],1,"Equal rates make concentrations stable, not equal.","Equilibrium"),
+Q("A strong acid differs from weak acid mainly in?",["color","degree of ionization in water","molar mass","state of matter"],1,"Strong acids ionize essentially completely in typical dilute aqueous conditions.","Acid-base"),
+Q("Conjugate acid-base pairs differ by?",["one electron","one proton","one neutron","one oxygen"],1,"They differ by H⁺.","Acid-base"),
+Q("Reducing agent is itself?",["reduced","oxidized","unchanged","neutralized"],1,"It donates electrons and is oxidized.","Redox"),
+Q("Salt bridge in a galvanic cell mainly?",["supplies electrons","maintains charge balance","heats the cell","changes electrode identity"],1,"Ion migration prevents charge buildup.","Electrochem"),
+Q("Greater entropy is often associated with?",["more dispersed matter/energy","fewer accessible microstates","perfect order always","lower temperature only"],0,"Entropy tracks dispersal and accessible arrangements.","Entropy"),
+Q("Spontaneous does not imply?",["ΔG<0 under conditions","fast reaction","thermodynamic favorability","possible without continuous external work"],1,"Kinetics controls speed independently.","Thermo vs kinetics"),
+Q("Fusion differs from fission because fusion?",["splits heavy nuclei","joins light nuclei","uses electrons only","is chemical bonding"],1,"Fusion joins light nuclei.","Nuclear")
+];
+const chemF=[
+Q("A 54.0 g metal displaces 6.00 mL water. It is then reported as 9.0 kg/L. Are the values consistent?",["yes","no, density should be 0.009","no, should be 90","cannot compare"],0,"54/6=9.00 g/mL and 1 g/mL=1 kg/L.","Fusion: density+units"),
+Q("0.25 mol CO₂ contains oxygen atoms closest to?",["1.51×10²³","3.01×10²³","6.02×10²³","1.20×10²⁴"],1,"0.25 mol CO₂ has 0.50 mol O atoms =3.01×10²³.","Fusion: mole+formula"),
+Q("10.0 g CaCO₃ (100 g/mol) contains formula units closest to?",["6.02×10²¹","6.02×10²²","6.02×10²³","1.00×10²⁵"],1,"10/100=0.10 mol; ×Nₐ≈6.02×10²².","Fusion: mass+mole"),
+Q("100 mL 0.20 M NaCl contains moles NaCl?",["0.002","0.020","0.20","20"],1,"0.100 L×0.20 mol/L=0.020 mol.","Fusion: volume+molarity"),
+Q("That 0.020 mol NaCl contains Na⁺ ions closest to?",["1.20×10²²","6.02×10²³","2.40×10²²","0.020"],0,"0.020×Nₐ≈1.20×10²² Na⁺ ions.","Fusion: molarity+particles"),
+Q("2H₂+O₂→2H₂O. If 4 mol H₂ and 1 mol O₂ react, limiting reactant?",["H₂","O₂","H₂O","none"],1,"1 mol O₂ requires 2 mol H₂, leaving H₂ excess.","Fusion: stoichiometry"),
+Q("With same amounts, theoretical H₂O?",["1 mol","2 mol","3 mol","4 mol"],1,"1 mol O₂ produces 2 mol H₂O.","Fusion: stoichiometry"),
+Q("If actual water is 1.6 mol, percent yield?",["40%","60%","80%","125%"],2,"1.6/2.0×100=80%.","Fusion: yield"),
+Q("A gas at 1.0 atm, 2.0 L compressed to 1.0 L at same T. New P?",["0.5 atm","1 atm","2 atm","4 atm"],2,"P₁V₁=P₂V₂ gives 2 atm.","Fusion: gas"),
+Q("If same gas is then heated from 300 K to 450 K at constant volume, pressure becomes?",["1.33 atm","2.0 atm","3.0 atm","4.5 atm"],2,"2×450/300=3 atm.","Fusion: gas+temperature"),
+Q("100 g water cools 10°C. Heat released magnitude?",["418 J","4.18 kJ","41.8 kJ","418 kJ"],1,"100×4.184×10=4184 J=4.18 kJ.","Fusion: heat+units"),
+Q("A reaction is thermodynamically favorable but extremely slow. Best explanation?",["ΔG positive","high activation barrier","no reactants","equilibrium constant zero"],1,"Kinetics can be slow despite favorable thermodynamics.","Fusion: thermo+kinetics"),
+Q("At equilibrium Q suddenly becomes smaller than K after reactant addition. Initial shift?",["left","right","none","K changes instantly"],1,"Q<K drives the reaction forward.","Fusion: equilibrium"),
+Q("A buffer receives a small amount of strong acid. Main effect?",["buffer consumes much of added H⁺","pH instantly becomes 0","K changes","all water evaporates"],0,"Conjugate base component consumes added H⁺.","Fusion: acid-base"),
+Q("Zn(s) loses electrons in a cell. It is the?",["cathode and reduced","anode and oxidized","salt bridge","electrolyte only"],1,"Oxidation occurs at the anode.","Fusion: redox+cell"),
+Q("A radioactive sample drops from 160 mg to 20 mg. Number of half-lives?",["2","3","4","8"],1,"160→80→40→20: three half-lives.","Fusion: nuclear"),
+Q("Shorter wavelength radiation generally has?",["lower frequency and energy","higher frequency and energy","higher wavelength only","same energy"],1,"ν∝1/λ and E=hν.","Fusion: EM+energy"),
+Q("A density outlier lies far above a linear mass-volume trend. Best first response?",["delete automatically","inspect measurement/procedure before excluding","average it twice","change accepted density"],1,"Investigate source and justification before excluding data.","Fusion: lab reasoning")
+];
+E.practiceTests={
+ A:test("Test A · Foundations","Measurement, matter, atomic structure, bonding, mole basics",chemA),
+ B:test("Test B · Core Skills","Quantitative chemistry and core relationships",chemB),
+ C:test("Test C · Applied","Transfer formulas into multi-step contexts",chemC),
+ D:test("Test D · Honors","Reasoning, limiting cases, and less obvious setup",chemD),
+ E:test("Test E · Cumulative","Broad-course recall plus conceptual diagnostics",chemE),
+ F:test("Test F · Fusion","Cross-topic problems where the chapter is hidden",chemF)
+};
+
+/* Expand chemistry fusion/challenge bank. */
+E.fusionChallenges=(E.fusionChallenges||[]).concat([
+ {level:"Bridge",title:"Density → Moles",prompt:"A 27.0 cm³ aluminum block has density 2.70 g/cm³. Using molar mass 26.98 g/mol, find moles of Al.",answer:"About 2.70 mol Al.",reasoning:"Mass=DV=72.9 g; moles=72.9/26.98≈2.70."},
+ {level:"Bridge",title:"Molarity → Particles",prompt:"How many Na⁺ ions are present in 250 mL of 0.400 M NaCl?",answer:"About 6.02×10²² Na⁺ ions.",reasoning:"0.250×0.400=0.100 mol NaCl, then ×Nₐ."},
+ {level:"Applied",title:"Gas → Temperature",prompt:"A 3.00 L gas at 290 K is heated to 348 K at constant pressure. Find new volume.",answer:"3.60 L.",reasoning:"V₂=V₁T₂/T₁=3.00×348/290."},
+ {level:"Applied",title:"Heat → Phase",prompt:"Why can energy enter boiling water while its temperature stays nearly constant?",answer:"Energy is used to overcome intermolecular attractions during vaporization.",reasoning:"During a phase change, added energy raises potential energy rather than average kinetic energy."},
+ {level:"Honors",title:"Equilibrium → Kinetics",prompt:"A catalyst is added to a system already at equilibrium. Explain both rate and composition effects.",answer:"Forward and reverse rates both increase, but equilibrium composition and K stay unchanged.",reasoning:"Catalysts lower activation energy for both directions and do not change thermodynamics."},
+ {level:"Honors",title:"Acid → Dilution",prompt:"A strong acid at pH 2 is diluted tenfold. Estimate new pH.",answer:"About pH 3.",reasoning:"Tenfold lower [H⁺] raises pH by one unit."},
+ {level:"Challenge",title:"Redox → Cell Design",prompt:"Given Zn/Zn²⁺ and Cu²⁺/Cu, identify anode, cathode, and electron direction for the spontaneous Zn oxidation setup.",answer:"Zn anode, Cu cathode, electrons Zn→Cu.",reasoning:"Zn is oxidized at the anode; Cu²⁺ is reduced at the cathode."},
+ {level:"Challenge",title:"Nuclear → Exponential Model",prompt:"A sample has half-life 6 h and starts at 96 mg. Build a model and find amount after 18 h.",answer:"A(t)=96(1/2)^(t/6); after 18 h, 12 mg.",reasoning:"18 h is three half-lives: 96→48→24→12."}
+]);
+
+/* ---------- MATHEMATICS: 6 x 18 = 108 questions ---------- */
+const mathA=[
+Q("If f(x)=4x−7, f(3)=?",["5","12","19","−19"],0,"4(3)−7=5.","Functions"),
+Q("Domain of 1/(x−6)?",["all reals","x≠6","x≥6","x≤6"],1,"Denominator cannot be zero.","Functions"),
+Q("Solve x+y=9 and x−y=1.",["(4,5)","(5,4)","(9,1)","(1,9)"],1,"Add equations: 2x=10, x=5, y=4.","Systems"),
+Q("Vertex of y=(x+2)²−3?",["(2,−3)","(−2,−3)","(−2,3)","(3,−2)"],1,"Vertex form gives (h,k)=(-2,-3).","Quadratics"),
+Q("Discriminant of x²+2x+5?",["−16","−4","4","16"],0,"b²−4ac=4−20=−16.","Quadratics"),
+Q("i⁴ equals?",["−1","i","−i","1"],3,"Powers of i cycle every four.","Complex"),
+Q("(x+3)(x−2)=?",["x²+x−6","x²−x−6","x²+5x+6","x²−6"],0,"FOIL gives x²+x−6.","Polynomial"),
+Q("Factor x²−25.",["(x−5)²","(x−25)(x+1)","(x−5)(x+5)","prime"],2,"Difference of squares.","Factoring"),
+Q("Zero associated with factor x+4?",["4","−4","0","1/4"],1,"Set x+4=0.","Polynomials"),
+Q("x^(1/2) means?",["x/2","√x","2x","x²"],1,"Exponent 1/2 is square root.","Radicals"),
+Q("Vertical asymptote of 1/(x+3)?",["x=3","x=−3","y=3","y=0 only"],1,"Denominator zero at x=-3.","Rational"),
+Q("5% growth factor?",["0.05","0.95","1.05","5"],2,"Growth factor=1+0.05.","Exponential"),
+Q("log₂(8)=?",["2","3","4","8"],1,"2³=8.","Logs"),
+Q("180° in radians?",["π/2","π","2π","180π"],1,"180°=π.","Trig"),
+Q("cos 0°=?",["0","1","−1","undefined"],1,"Unit-circle x-coordinate at 0° is 1.","Trig"),
+Q("Arithmetic sequence has constant?",["ratio","difference","product","square"],1,"Arithmetic means constant difference.","Sequences"),
+Q("Circle x²+y²=16 has radius?",["2","4","8","16"],1,"r²=16 so r=4.","Analytic geometry"),
+Q("Combination is appropriate when?",["order matters","order does not matter","events are dependent","a graph is needed"],1,"Combinations ignore ordering.","Probability")
+];
+const mathB=[
+Q("If f(x)=x+2 and g(x)=3x, find g(f(4)).",["12","16","18","20"],2,"f(4)=6, then g(6)=18.","Functions"),
+Q("Inverse of f(x)=2x−5?",["(x+5)/2","2x+5","(x−5)/2","5−2x"],0,"Swap x,y and solve: y=(x+5)/2.","Functions"),
+Q("For y≥2x+1, boundary line is?",["dashed","solid","vertical","none"],1,"≥ includes boundary.","Inequalities"),
+Q("Solve x²−7x+12=0.",["x=3,4","x=−3,−4","x=2,6","no real roots"],0,"(x−3)(x−4)=0.","Quadratics"),
+Q("Exactly one real root occurs when discriminant?",["<0",">0","=0","=1"],2,"A repeated real root has discriminant zero.","Quadratics"),
+Q("(3+2i)+(4−5i)=?",["7−3i","7+7i","−1−3i","12−10i"],0,"Combine real and imaginary parts.","Complex"),
+Q("Remainder dividing f(x) by x−2 equals?",["f(0)","f(2)","2f(x)","x−2"],1,"Remainder Theorem.","Polynomial"),
+Q("Multiplicity 2 zero usually graph?",["crosses","touches and turns","has asymptote","is undefined"],1,"Even multiplicity touches/turns.","Polynomial graph"),
+Q("Positive odd-degree leading term right end?",["up","down","horizontal","undefined"],0,"Positive odd degree rises right.","End behavior"),
+Q("Solve √(x+1)=3.",["x=2","x=8","x=9","x=10"],1,"x+1=9 so x=8.","Radicals"),
+Q("A canceled denominator factor creates?",["vertical asymptote","hole","minimum","new zero always"],1,"Original restriction remains as a hole.","Rational"),
+Q("Horizontal asymptote of (3x+1)/(x−2)?",["y=0","y=1","y=3","x=2"],2,"Equal degree ratio is 3/1.","Rational"),
+Q("$1000 grows 10% annually for 2 years. Amount?",["1100","1200","1210","1000"],2,"1000(1.10)^2=1210.","Exponential"),
+Q("log(ab)=?",["log a · log b","log a + log b","log a − log b","a log b"],1,"Product property.","Logs"),
+Q("Period of sin(2x)?",["π/2","π","2π","4π"],1,"2π/2=π.","Trig"),
+Q("Amplitude of −5cos x?",["−5","5","1","2π"],1,"Amplitude is absolute value of coefficient.","Trig"),
+Q("Geometric sequence a₁=3,r=2. a₄=?",["9","12","18","24"],3,"3×2³=24.","Sequences"),
+Q("Residual equals?",["predicted−observed","observed−predicted","mean−median","slope"],1,"Residual = observed minus predicted.","Data")
+];
+const mathC=[
+Q("For f(x)=x²−4, range?",["all reals","y≥−4","y≤−4","y≠4"],1,"Minimum is -4.","Functions"),
+Q("Three equations in three unknowns are commonly reduced by?",["integration","elimination","logarithms","factoring only"],1,"Systematic elimination reduces dimension.","Systems"),
+Q("For y=−2(x−1)²+7, maximum value?",["−2","1","7","9"],2,"Downward-opening parabola has vertex maximum 7.","Quadratics"),
+Q("Roots of x²+16=0?",["±4","±16i","±4i","no solutions at all"],2,"x²=-16 so x=±4i.","Complex"),
+Q("Factor x³−8.",["(x−2)(x²+2x+4)","(x−8)(x²+1)","(x−2)³","prime"],0,"Difference of cubes.","Polynomial"),
+Q("Minimum degree with multiplicities 2,1,3?",["3","5","6","8"],2,"Sum multiplicities=6.","Polynomial"),
+Q("Domain of √(7−x)?",["x≥7","x≤7","x≠7","all reals"],1,"Radicand must be ≥0.","Radicals"),
+Q("For (x²−9)/(x−3), x=3 is?",["zero","hole","vertical asymptote","maximum"],1,"Factor cancels but original domain excludes 3.","Rational"),
+Q("Half-life 4 years model factor?",["2^(t/4)","(1/2)^(t/4)","4^t","t/8"],1,"Each 4 years multiplies by 1/2.","Exponential"),
+Q("Solve 3^x=10 best exact form?",["10/3","ln10/ln3","3ln10","ln30"],1,"Take logs: x=ln10/ln3.","Logs"),
+Q("sin 30°=?",["0","1/2","√2/2","√3/2"],1,"Unit circle exact value.","Trig"),
+Q("cos 150° sign?",["positive","negative","zero","undefined"],1,"Quadrant II cosine is negative.","Trig"),
+Q("y=3sin(4x)+2 has period?",["π/2","π","2π","4π"],0,"2π/4=π/2.","Trig graphs"),
+Q("1+tan²x=?",["csc²x","sec²x","sin²x","1"],1,"Pythagorean identity.","Trig identities"),
+Q("Arithmetic a₁=5,d=4,a₁₀?",["36","41","45","50"],1,"5+9×4=41.","Sequences"),
+Q("Infinite geometric 8+4+2+... sum?",["8","12","16","∞"],2,"8/(1−1/2)=16.","Series"),
+Q("x²/9+y²/4=1 is?",["circle","parabola","ellipse","hyperbola"],2,"Same-sign unequal denominators indicate ellipse.","Conics"),
+Q("Independent A,B with P(A)=.5,P(B)=.2: P(A∩B)?",[".1",".3",".5",".7"],0,"Multiply for independent events.","Probability")
+];
+const mathD=[
+Q("If f⁻¹(7)=3, then f(3)=?",["3","7","10","1/7"],1,"Inverse reverses input-output.","Functions"),
+Q("A system has same slope, different intercepts. Solutions?",["one","two","none","infinitely many"],2,"Distinct parallel lines never intersect.","Systems"),
+Q("Find k so x²+kx+16=0 has exactly one real root.",["k=0","k=±4","k=±8","k=16"],2,"k²−64=0, so k=±8.","Quadratics"),
+Q("Conjugate of 5−3i?",["−5+3i","5+3i","−5−3i","3+5i"],1,"Change sign of imaginary part.","Complex"),
+Q("If f(4)=0, then which is a factor?",["x+4","x−4","4x−1","x²+4"],1,"Factor Theorem.","Polynomial"),
+Q("Negative even-degree leading coefficient end behavior?",["up/up","down/down","left up right down","left down right up"],1,"Both ends fall.","Polynomial"),
+Q("Equation √(x−1)=x−5 requires before solving?",["x≤1","x≥5","x≠5","no restriction"],1,"Right side must be nonnegative too, so x≥5.","Radicals"),
+Q("Horizontal asymptote of (2x²+1)/(4x²−3)?",["y=0","y=1/2","y=2","none"],1,"Ratio leading coefficients 2/4=1/2.","Rational"),
+Q("If a quantity triples every 5 h, model factor?",["3^(t/5)","5^(t/3)","(1/3)^(t/5)","3t/5"],0,"Each 5 h multiplies by 3.","Exponential"),
+Q("Domain of log(x−2)?",["x>2","x≥2","x≠2","all reals"],0,"Log argument must be positive.","Logs"),
+Q("Arc length radius 6, angle π/3?",["2π","3π","6π","18π"],0,"s=rθ=6π/3=2π.","Trig"),
+Q("tan θ undefined when?",["sinθ=0","cosθ=0","θ=0 only","amplitude=0"],1,"tan=sin/cos.","Trig"),
+Q("Solve sinx=1 on [0,2π).",["0","π/2","π","3π/2"],1,"Sine reaches 1 at π/2.","Trig"),
+Q("Geometric a₁=10,r=.8,a₅?",["4.096","5.12","6.4","8.0"],0,"10(.8)^4=4.096.","Sequences"),
+Q("Infinite geometric series converges for?",["r=1.2","r=−1.1","r=.7","r=2"],2,"Need |r|<1.","Series"),
+Q("Circle center from (x−4)²+(y+2)²=25?",["(−4,2)","(4,−2)","(4,2)","(−4,−2)"],1,"Center (h,k)=(4,-2).","Conics"),
+Q("If residual plot has curved pattern, linear fit is?",["excellent automatically","missing nonlinear structure","causal","impossible to evaluate"],1,"Systematic residual pattern indicates poor model form.","Data"),
+Q("Correlation 0.95 proves causation?",["yes","no","only if n>100","only in experiments"],1,"Correlation alone does not establish cause.","Data")
+];
+const mathE=[
+Q("Which representation best exposes roots of a quadratic?",["standard","factored","vertex","table only"],1,"Factored form displays zeros directly.","Model selection"),
+Q("Which representation best exposes maximum/minimum?",["vertex","factored","expanded only","probability"],0,"Vertex form shows extremum.","Model selection"),
+Q("Dividing both sides by x can lose which case?",["x=0","x=1","x=−1","all cases"],0,"Division assumes x≠0.","Error detective"),
+Q("Squaring both sides can introduce?",["holes only","extraneous roots","new variables","no issues"],1,"Squaring is not one-to-one over reals.","Error detective"),
+Q("Constant second differences suggest?",["linear","quadratic","exponential","logarithmic"],1,"Quadratics have constant second difference.","Model selection"),
+Q("Constant ratios suggest?",["quadratic","exponential","linear","circle"],1,"Multiplicative change is exponential.","Model selection"),
+Q("Repeating oscillation suggests?",["rational","trigonometric","quadratic","constant"],1,"Periodic behavior is modeled trigonometrically.","Model selection"),
+Q("Data level toward a finite ceiling. Pure exponential growth is weak because?",["it oscillates","it has no finite upper asymptote","it is linear","it has no parameters"],1,"Unbounded exponential growth does not saturate.","Model selection"),
+Q("Function and inverse graphs reflect across?",["x-axis","y-axis","y=x","y=−x"],2,"Inverse swaps x,y.","Functions"),
+Q("If polynomial zero has multiplicity 4, graph near zero usually?",["crosses","touches and turns","has vertical asymptote","is discontinuous"],1,"Even multiplicity.","Polynomials"),
+Q("If rational numerator degree one larger than denominator, likely?",["horizontal asymptote only","slant asymptote","no asymptote ever","circle"],1,"Degree difference one gives slant asymptote after division.","Rational"),
+Q("ln(e⁷)=?",["e⁷","7","1/7","0"],1,"Natural log and e^x are inverses.","Logs"),
+Q("For y=Acos(Bx)+D, midline?",["x=A","y=B","y=D","x=D"],2,"Vertical shift D is midline.","Trig"),
+Q("Phase shift in A sin(B(x−C))+D?",["A","B","C","D"],2,"C gives horizontal shift.","Trig"),
+Q("Sequence explicit form advantage over recursive?",["requires prior term","finds any term directly","only works arithmetic","never uses n"],1,"Explicit formula goes directly to term n.","Sequences"),
+Q("Opposite signs on x² and y² terms indicate?",["ellipse","circle","hyperbola","line"],2,"Hyperbola standard forms have opposite signs.","Conics"),
+Q("P(A|B) equals?",["P(A∩B)/P(B)","P(A)/P(B)","P(A)+P(B)","P(B|A) always"],0,"Conditional definition.","Probability"),
+Q("Best evidence a model is appropriate?",["high r alone","residuals with no systematic pattern plus context","large coefficients","many decimals"],1,"Residuals and context are more diagnostic.","Data")
+];
+const mathF=[
+Q("A parabola has vertex (2,−3) and passes through (4,5). Equation?",["y=(x−2)²−3","y=2(x−2)²−3","y=3(x−2)²−3","y=−2(x−2)²−3"],1,"5=a(2²)−3 → a=2.","Fusion"),
+Q("Zeros −1 and 3, with 3 multiplicity 2. Least-degree monic polynomial?",["(x+1)(x−3)","(x+1)(x−3)²","(x−1)(x+3)²","(x+1)²(x−3)"],1,"Translate zeros to factors and multiplicity to exponent.","Fusion"),
+Q("A quantity doubles every 6 h from 50. Model?",["50·2^(t/6)","50+t/6","6·2^(t/50)","50·6^t"],0,"Doubling time enters exponent denominator.","Fusion"),
+Q("When does 50·2^(t/6) reach 400?",["6 h","12 h","18 h","24 h"],2,"400/50=8=2³, so t/6=3.","Fusion"),
+Q("(x²−4)/(x²−x−2) simplifies with what feature?",["hole at x=2","hole at x=−1","vertical asymptote x=2","no restrictions"],0,"Factor: (x−2)(x+2)/[(x−2)(x+1)], so hole x=2.","Fusion"),
+Q("Same function has vertical asymptote?",["x=2","x=−1","y=1","none"],1,"Uncanceled denominator x+1=0.","Fusion"),
+Q("A Ferris wheel radius 10, center 12, starts bottom. Suitable model?",["12+10cos t","12−10cos(ωt)","10+12sin t","22cos t"],1,"Starting bottom uses center minus cosine term.","Fusion"),
+Q("Period 30 s gives angular frequency ω?",["π/30","π/15","15π","30π"],1,"ω=2π/T=π/15.","Fusion"),
+Q("Arithmetic deposit starts 1000 and rises by 200 yearly. Year 8?",["2200","2400","2600","2800"],1,"1000+7×200=2400.","Fusion"),
+Q("Geometric deposit starts 1000 and rises 20% yearly. Year 8?",["2400","≈3583","≈4299","8000"],1,"1000(1.2)^7≈3583.","Fusion"),
+Q("Which grows faster long-term: arithmetic +200 or geometric ×1.2?",["arithmetic","geometric","same always","cannot compare"],1,"Exponential/geometric eventually dominates linear/arithmetic.","Fusion"),
+Q("A dataset has constant differences then suddenly curves upward. Best response?",["force linear model","inspect whether regime/model changed","delete last data","average x-values"],1,"Structural change may invalidate one global model.","Fusion"),
+Q("x²+kx+9 has one real root when?",["k=0","k=±3","k=±6","k=9"],2,"k²−36=0.","Fusion"),
+Q("If f(x)=2x+1, intersection with inverse lies on?",["x-axis","y-axis","y=x","y=−x"],2,"Any function/inverse intersection lies on y=x.","Fusion"),
+Q("Solve 2^x=20 approximately by?",["x=20/2","x=ln20/ln2","x=ln2/ln20","x=10"],1,"Log both sides.","Fusion"),
+Q("If pH-style logarithmic scale drops by 2 units, underlying quantity changes by factor?",["2","10","100","1000"],2,"Two log-base-10 units correspond to 10².","Fusion"),
+Q("Conditional probability changes because?",["sample space is restricted by the condition","addition always occurs","order never matters","all events independent"],0,"Condition B restricts the relevant universe.","Fusion"),
+Q("A model has strong fit but impossible negative predictions for future population. Best conclusion?",["accept anyway","model is unsuitable outside fitted range","data are wrong","negative population is fine"],1,"Context and extrapolation limits matter.","Fusion")
+];
+M.practiceTests={
+ A:test("Test A · Foundations","Core fluency across functions, algebra, trig, sequences and data",mathA),
+ B:test("Test B · Core Skills","Procedures, representations, and equation structure",mathB),
+ C:test("Test C · Applied","Transfer skills into unfamiliar forms",mathC),
+ D:test("Test D · Honors","Hidden conditions and multi-step reasoning",mathD),
+ E:test("Test E · Diagnostic","Model selection, misconceptions, and error detection",mathE),
+ F:test("Test F · Fusion","Cross-topic problems where method selection is the test",mathF)
+};
+
+/* Expand Math Challenge Lab to 24 total. */
+M.challenges=[
+ {level:"Bridge",title:"Vertex from a Condition",prompt:"A quadratic has vertex (−2,5) and passes through (0,1). Build its equation.",answer:"y=−(x+2)²+5.",reasoning:"Use y=a(x+2)²+5; 1=4a+5, so a=−1."},
+ {level:"Bridge",title:"Inverse Check",prompt:"For f(x)=3x−8, find f⁻¹(x) and verify f⁻¹(f(4)).",answer:"f⁻¹(x)=(x+8)/3 and f⁻¹(f(4))=4.",reasoning:"Swap x,y and solve, then compose."},
+ {level:"Bridge",title:"Zero to Factor",prompt:"Build a monic cubic with zeros −1, 2, and 5.",answer:"(x+1)(x−2)(x−5).",reasoning:"Each zero r becomes factor x−r."},
+ {level:"Bridge",title:"Sequence Choice",prompt:"A sequence is 5, 15, 45, 135,... Identify type and give explicit rule.",answer:"Geometric, aₙ=5·3^(n−1).",reasoning:"Constant ratio 3 identifies a geometric sequence."},
+ {level:"Bridge",title:"Circle from Center",prompt:"Write the circle with center (3,−4) and radius 6.",answer:"(x−3)²+(y+4)²=36.",reasoning:"Use center-radius form."},
+ {level:"Bridge",title:"Log Translation",prompt:"Rewrite 5³=125 as a logarithmic statement.",answer:"log₅(125)=3.",reasoning:"Logarithm asks which exponent on the base creates the argument."},
+ {level:"Applied",title:"Projectile Vertex",prompt:"h(t)=−16t²+80t+6. When is maximum height reached?",answer:"t=2.5 s.",reasoning:"Vertex time −b/(2a)=−80/(−32)=2.5."},
+ {level:"Applied",title:"Rational Feature Map",prompt:"Analyze f(x)=(x−2)(x+1)/[(x−2)(x−4)]. Identify hole and vertical asymptote.",answer:"Hole at x=2; vertical asymptote x=4.",reasoning:"Canceled factor gives hole; uncanceled denominator gives asymptote."},
+ {level:"Applied",title:"Compound Growth",prompt:"$2500 earns 6% compounded annually for 8 years. Estimate balance.",answer:"About $3,984.62.",reasoning:"A=2500(1.06)^8."},
+ {level:"Applied",title:"Sinusoid from Features",prompt:"Build a sine model with amplitude 4, period 10, midline 3, no phase shift.",answer:"y=4sin(πx/5)+3.",reasoning:"B=2π/10=π/5."},
+ {level:"Applied",title:"Conditional Probability",prompt:"In a group of 40, 24 play sports and 10 of those also play music. Find P(music | sports).",answer:"10/24=5/12≈0.417.",reasoning:"Condition on sports: relevant denominator is 24."},
+ {level:"Applied",title:"Model from Ratios",prompt:"Data values are 12, 18, 27, 40.5. Identify a plausible model family and ratio.",answer:"Exponential/geometric with ratio 1.5.",reasoning:"Each value is multiplied by 1.5."},
+ {level:"Honors",title:"Constraint on Roots",prompt:"Find all k such that x²+kx+16=0 has exactly one real root.",answer:"k=±8.",reasoning:"Set discriminant k²−64 to zero."},
+ {level:"Honors",title:"Build from Multiplicity",prompt:"Least-degree polynomial with zero −2 multiplicity 3 and zero 4 multiplicity 2, leading coefficient 2.",answer:"2(x+2)³(x−4)².",reasoning:"Multiplicity becomes factor exponent."},
+ {level:"Honors",title:"Logarithmic Time",prompt:"A culture starts at 300 and grows by factor 1.18 hourly. When does it exceed 2000?",answer:"About 11.5 h.",reasoning:"Solve 300(1.18)^t=2000 using logs."},
+ {level:"Honors",title:"Trig Equation",prompt:"Solve 2sin x−1=0 on [0,2π).",answer:"x=π/6, 5π/6.",reasoning:"sin x=1/2 in quadrants I and II."},
+ {level:"Honors",title:"Conic Classification",prompt:"Classify 4x²−9y²+16x+18y−29=0 before fully completing squares.",answer:"Hyperbola.",reasoning:"Squared terms have opposite signs."},
+ {level:"Honors",title:"Residual Diagnosis",prompt:"A linear regression has R²=.97 but residuals form a clear U-shape. What should you conclude?",answer:"Linear fit misses systematic nonlinear structure despite high R².",reasoning:"Residual pattern is diagnostic of model misspecification."},
+ {level:"Challenge",title:"Function + Inverse Intersection",prompt:"For f(x)=2x+3, solve where f(x)=f⁻¹(x).",answer:"x=−3.",reasoning:"f⁻¹(x)=(x−3)/2; solve 2x+3=(x−3)/2."},
+ {level:"Challenge",title:"Piecewise Model Choice",prompt:"A pricing rule charges $8 for first 2 hours and $3 per extra hour. Build a piecewise model.",answer:"C(t)=8 for 0<t≤2; C(t)=8+3(t−2) for t>2.",reasoning:"Different rules apply on different intervals."},
+ {level:"Challenge",title:"Exponential vs Linear Crossover",prompt:"Plan A grows 50 units/year from 1000. Plan B starts 600 and grows 10%/year. Explain how to find crossover year.",answer:"Solve 1000+50t=600(1.10)^t numerically/graphically.",reasoning:"Different model families rarely yield a simple algebraic closed form."},
+ {level:"Challenge",title:"Rational Design",prompt:"Create a rational function with vertical asymptote x=2, horizontal asymptote y=3, and a hole at x=−1.",answer:"One example: 3(x+1)(x+4)/[(x+1)(x−2)] adjusted so leading ratio is 3; e.g. 3(x+1)(x+4)/((x+1)(x−2)).",reasoning:"Canceled x+1 creates hole; uncanceled x−2 creates vertical asymptote; equal degree leading ratio 3."},
+ {level:"Challenge",title:"Periodic Data Model",prompt:"A tide oscillates between 1.2 m and 5.8 m every 12 hours. Determine amplitude, midline, period, and one cosine model starting at high tide.",answer:"Amplitude 2.3, midline 3.5, period 12; h(t)=3.5+2.3cos(πt/6).",reasoning:"Amplitude=(5.8−1.2)/2, midline average, B=2π/12."},
+ {level:"Challenge",title:"Probability Dependence",prompt:"P(A)=0.6, P(B)=0.5, P(A∩B)=0.4. Are A and B independent?",answer:"No.",reasoning:"If independent, intersection would be 0.6×0.5=0.3, not 0.4."}
+];
+
+/* 3 cumulative Math mock exams x 24 = 72 additional questions. */
+const extra=[
+ Q("Domain of √(2x−6)?",["x≥3","x≤3","x≠3","all reals"],0,"2x−6≥0.","Functions"),
+ Q("Inverse of y=(x−4)/3?",["3x+4","x/3−4","3x−4","(x+4)/3"],0,"Swap and solve x=(y−4)/3 → y=3x+4.","Functions"),
+ Q("Solve 2x+3y=12, x−y=1.",["(3,2)","(2,3)","(4,1)","(1,4)"],0,"x=y+1; 2(y+1)+3y=12 → y=2,x=3.","Systems"),
+ Q("Quadratic with roots 2 and −5?",["(x−2)(x+5)","(x+2)(x−5)","(x−2)(x−5)","(x+2)(x+5)"],0,"Root r gives factor x−r.","Quadratics"),
+ Q("Vertex x-coordinate for ax²+bx+c?",["a/b","−b/2a","b/2a","−a/2b"],1,"Axis formula.","Quadratics"),
+ Q("i^10=?",["1","−1","i","−i"],1,"10 mod 4=2, so i²=−1.","Complex"),
+ Q("(2+3i)(2−3i)=?",["−5","5","13","4−9i"],2,"Conjugate product=4+9=13.","Complex"),
+ Q("If x−1 is factor of f, then f(1)=?",["−1","0","1","undefined"],1,"Factor Theorem.","Polynomial"),
+ Q("Degree 4 positive leading coefficient end behavior?",["up/up","down/down","up/down","down/up"],0,"Positive even degree rises both ends.","Polynomial"),
+ Q("Simplify x^(5/2) for x≥0.",["x²√x","x√x","√(x⁵)/x","x³"],0,"x^(5/2)=x²√x.","Radicals"),
+ Q("A rational equation solution x=4 but original denominator has x−4. Accept?",["yes","no","only if numerator zero","only if graph crosses"],1,"Original restriction excludes x=4.","Rational"),
+ Q("As x→∞, 1/(x−2) approaches?",["∞","−∞","0","2"],2,"Horizontal asymptote y=0.","Rational"),
+ Q("Decay 7% gives factor?",["0.07","0.93","1.07","7"],1,"1−0.07=.93.","Exponential"),
+ Q("Continuous growth formula uses?",["A=P+rt","A=Pe^(rt)","A=P/r","A=Prt"],1,"Continuous compounding.","Exponential"),
+ Q("log₃(1)=?",["−1","0","1","3"],1,"3^0=1.","Logs"),
+ Q("If log₂x=5, x=?",["10","25","32","64"],2,"2^5=32.","Logs"),
+ Q("225° lies in quadrant?",["I","II","III","IV"],2,"Between 180° and 270°.","Trig"),
+ Q("sin²x+cos²x=?",["0","1","tanx","sec²x"],1,"Fundamental Pythagorean identity.","Trig"),
+ Q("Period of tanx?",["π/2","π","2π","4π"],1,"Tangent repeats every π.","Trig"),
+ Q("Geometric r=−1/2 infinite series converges?",["yes","no","only finite","undefined"],0,"|r|<1.","Sequences"),
+ Q("Parabola conic has how many squared variables in unrotated standard form?",["0","1","2 same sign","2 opposite sign"],1,"One variable is squared.","Conics"),
+ Q("P(not A) if P(A)=.72?",[".18",".28",".72","1.72"],1,"Complement=1−.72=.28.","Probability"),
+ Q("C(6,2)=?",["12","15","30","36"],1,"6·5/2=15.","Counting"),
+ Q("A random residual plot indicates?",["model may be reasonable","perfect causation","wrong units","no noise"],0,"No systematic pattern supports chosen form.","Data")
+];
+const mock1=[
+ Q("f(x)=x²+2x. f(3)?",["9","12","15","18"],2,"9+6=15."),
+ Q("Domain of 1/(x²−9)?",["x≠±3","x≥3","x≠9","all reals"],0,"Denominator factors (x−3)(x+3)."),
+ Q("Solve x²−5x+6=0.",["1,6","2,3","−2,−3","no roots"],1,"Factor (x−2)(x−3)."),
+ Q("Discriminant of 2x²+4x+2?",["0","4","8","16"],0,"16−16=0."),
+ Q("i^7=?",["i","−i","1","−1"],1,"7 mod4=3, so −i."),
+ Q("Factor x³+8.",["(x+2)(x²−2x+4)","(x−2)(x²+2x+4)","(x+8)(x²+1)","prime"],0,"Sum of cubes."),
+ Q("Zero multiplicity 2 means graph usually?",["crosses","touches","asymptote","hole"],1,"Even multiplicity."),
+ Q("√(x+4)=5 gives x?",["9","21","25","29"],1,"x+4=25."),
+ Q("Vertical asymptote of (x+1)/(x−5)?",["x=−1","x=5","y=1","y=5"],1,"Denominator zero."),
+ Q("Growth 4% factor?",[".04",".96","1.04","4"],2,"1+.04."),
+ Q("Solve 10^x=10000.",["2","3","4","5"],2,"10^4=10000."),
+ Q("60° radians?",["π/6","π/3","π/2","2π/3"],1,"60/180π=π/3."),
+ Q("cos180°?",["1","0","−1","undefined"],2,"Unit circle."),
+ Q("Amplitude y=2sinx−3?",["2","3","−3","2π"],0,"Amplitude |2|."),
+ Q("a1=7,d=5,a6?",["25","30","32","35"],2,"7+5·5=32."),
+ Q("Circle radius for (x−1)²+(y+2)²=49?",["1","2","7","49"],2,"r=7."),
+ Q("P(A)=.3, complement?",[".3",".7","1.3","0"],1,"1−.3."),
+ Q("Residual positive means observed is?",["above prediction","below prediction","equal prediction","zero"],0,"observed−predicted>0."),
+ ...extra.slice(0,6)
+];
+const mock2=[
+ Q("If f(x)=2x+1 and f(a)=9, a=?",["3","4","5","8"],1,"2a+1=9→a=4."),
+ Q("Composition g(f(x)) with f=x+1,g=2x gives?",["2x+1","2x+2","x+3","2x²"],1,"2(x+1)."),
+ Q("System y=2x+1 and y=2x−4 has?",["one solution","none","infinitely many","two"],1,"Parallel lines."),
+ Q("Vertex of y=−(x−4)²+7?",["(−4,7)","(4,7)","(4,−7)","(7,4)"],1,"Vertex (4,7)."),
+ Q("x²+4x+8 roots are?",["real distinct","real repeated","complex","zero only"],2,"Discriminant 16−32<0."),
+ Q("Conjugate of −2+5i?",["2−5i","−2−5i","2+5i","5−2i"],1,"Flip imaginary sign."),
+ Q("Remainder dividing f by x+2 equals?",["f(2)","f(−2)","2","−2"],1,"x−c with c=−2."),
+ Q("Positive even-degree polynomial left end?",["up","down","zero","undefined"],0,"Both ends up."),
+ Q("Domain of √(x−9)?",["x>9","x≥9","x≤9","x≠9"],1,"Radicand ≥0."),
+ Q("Hole arises from?",["uncanceled denominator zero","canceled common factor","zero numerator only","degree mismatch"],1,"Canceled common factor."),
+ Q("Decay 20% factor?",[".2",".8","1.2","20"],1,"1−.2=.8."),
+ Q("ln(e³)=?",["e³","3","1/3","0"],1,"Inverse functions."),
+ Q("315° quadrant?",["I","II","III","IV"],3,"Between 270 and 360."),
+ Q("tan45°?",["0","1","√2","undefined"],1,"Exact value 1."),
+ Q("Period y=cos(5x)?",["5π","2π","2π/5","π/5"],2,"2π/5."),
+ Q("Geometric a1=6,r=3,a4?",["54","108","162","486"],2,"6·3³=162."),
+ Q("Ellipse has squared terms?",["opposite signs","same signs typically","one only","none"],1,"Standard ellipse has same-sign squared terms."),
+ Q("P(A|B) uses denominator?",["P(A)","P(B)","P(A∩B)","1"],1,"Conditioning event B."),
+ ...extra.slice(6,12)
+];
+const mock3=[
+ Q("f(x)=|x| shifted right 3 is?",["|x+3|","|x−3|","|x|+3","−|x|"],1,"Inside sign reverses horizontal shift."),
+ Q("Inverse graphs reflect across?",["x-axis","y-axis","y=x","origin"],2,"Swap coordinates."),
+ Q("Solve x²−4=0.",["x=2 only","x=−2 only","x=±2","no real"],2,"Difference of squares."),
+ Q("Exactly one real root criterion?",["D>0","D<0","D=0","D=1"],2,"Repeated root."),
+ Q("(1+i)²=?",["2","2i","1+i","−2"],1,"1+2i+i²=2i."),
+ Q("Factor theorem: if f(−3)=0, factor?",["x−3","x+3","3x+1","x²−3"],1,"Zero -3 corresponds x+3."),
+ Q("Odd multiplicity zero graph?",["usually crosses","usually touches","always asymptote","always hole"],0,"Odd multiplicity crosses."),
+ Q("Rational horizontal asymptote equal degree?",["ratio leading coefficients","always 0","none","denominator root"],0,"Compare leading coefficients."),
+ Q("Doubling every 8 years model?",["A0·2^(t/8)","A0+2t/8","A0·8^(t/2)","A0/2^t"],0,"Doubling-time model."),
+ Q("Solve e^x=12.",["x=12e","x=ln12","x=log12/12","x=e/12"],1,"Natural log inverse."),
+ Q("Radians 270°?",["π","3π/2","2π","π/2"],1,"270π/180=3π/2."),
+ Q("sinx=0 on [0,2π] includes?",["0,π,2π","π/2 only","π/4,3π/4","none"],0,"Sine zero at integer multiples of π."),
+ Q("Midline y=4sinx−2?",["y=4","y=−2","x=−2","y=2"],1,"Vertical shift D=-2."),
+ Q("Arithmetic sum first n terms formula?",["n(a1+an)/2","a1/(1-r)","nr","n²"],0,"Finite arithmetic sum."),
+ Q("Hyperbola squared terms signs?",["same","opposite","one term only","none"],1,"Opposite signs."),
+ Q("P(A∩B) independent?",["P(A)+P(B)","P(A)P(B)","P(A)/P(B)","1−P(A)"],1,"Multiply independent probabilities."),
+ Q("High R² plus patterned residuals means?",["model perfect","inspect model form","causation proven","delete data"],1,"Residual structure can reveal misspecification."),
+ Q("Constant second difference data suggests?",["linear","quadratic","exponential","trig"],1,"Quadratic signature."),
+ ...extra.slice(12,18)
+];
+M.mockExams={
+ M1:test("Mock Exam 1","Comprehensive fluency + applied reasoning",mock1),
+ M2:test("Mock Exam 2","Representation switching + multi-step algebra",mock2),
+ M3:test("Mock Exam 3","Honors synthesis + diagnostics",mock3)
+};
+})();
