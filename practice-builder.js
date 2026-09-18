@@ -45,7 +45,7 @@ function canonicalTopic(subject,raw){
  if(/ap precalculus/.test(t))return "AP Precalculus";
  return raw||"Mixed Mathematics";
 }
-const uniqueTopics=(pool:pool.map(q=>({...q,builderTopic:canonicalTopic(subjectKey,q.topic)})),subject)=>[...new Set(pool.map(q=>canonicalTopic(subject,q.topic)).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
+const uniqueTopics=(pool,subject)=>[...new Set(pool.map(q=>canonicalTopic(subject,q.topic)).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
 const presetsFor=(subject,level)=>{
  const profile=LEVELS()?.getProfile(subject,level),d=profile?.defaults||{count:15,grading:"standard",levels:{simple:25,medium:35,complex:25,fusion:15}};
  return [
@@ -56,13 +56,13 @@ const presetsFor=(subject,level)=>{
  ];
 };
 function subjectAdapter(subjectKey,level){
- const L=LEVELS(),profile=L?.getProfile(subjectKey,level),pool=L?.pool(subjectKey,level)||[];
+ const L=LEVELS(),profile=L?.getProfile(subjectKey,level),rawPool=L?.pool(subjectKey,level)||[],pool=rawPool.map(q=>({...q,builderTopic:canonicalTopic(subjectKey,q.topic)}));
  return {
   key:subjectKey,
   name:profile?.title||(subjectKey==="math"?"Mathematics":"Chemistry"),
   route:subjectKey==="math"?"mathematics-honors":"chemistry-honors",
   level:profile?.key||level||"honors",
-  topics:uniqueTopics(pool,subjectKey),
+  topics:[...new Set(pool.map(q=>q.builderTopic))].sort((a,b)=>a.localeCompare(b)),
   pool,
   presets:presetsFor(subjectKey,profile?.key||level||"honors")
  };
