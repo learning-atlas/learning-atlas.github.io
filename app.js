@@ -31,7 +31,7 @@ function allowedChemTopics(){const L=LEVELS();return L?D.topics.filter(t=>L.topi
 function allowedMathTopics(){const L=LEVELS(),m=MATH();return L?m.topics.filter(t=>L.topicAllowed("math",t.id)):m.topics}
 function modulesFor(subject,t){
  const level=currentLevel(subject),mods=t?.modules||[];
- if(level==="cp")return mods.filter(m=>!/honors|challenge|ap core|ap practice|extension/i.test(m.type||""));
+ if(level==="cp"){if(subject==="chemistry")return mods.filter(m=>!/multi-step|data analysis|lab design|graph reasoning|quantitative reasoning|system reasoning|synthesis|ap core|ap practice/i.test(m.type||""));return mods.filter(m=>!/honors|challenge|ap core|ap practice|extension|diagnostic|synthesis/i.test(m.type||""))}
  if(level==="honors")return mods.filter(m=>!/ap core|ap practice/i.test(m.type||""));
  return mods;
 }
