@@ -397,7 +397,7 @@ function bind(){
  $("#palette")?.addEventListener("click",e=>{if(e.target.id==="palette")e.currentTarget.classList.remove("open")});
  $(".test-tab[data-test]").forEach(b=>b.onclick=()=>{$(".test-tab[data-test]").forEach(x=>x.classList.toggle("active",x===b));renderTest(b.dataset.test)});
  $$(".level-tab").forEach(b=>b.onclick=()=>{$$(".level-tab").forEach(x=>x.classList.toggle("active",x===b));renderChallenge(+b.dataset.level)});
- bindDynamic();bindTools();bindTimer();bindVisualLab();bindMathVisualLab();$(".math-test-tab").forEach(b=>b.onclick=()=>{$(".math-test-tab").forEach(x=>x.classList.toggle("active",x===b));renderMathTest(b.dataset.mathTest)});enhanceScrollExperience()
+ bindDynamic();bindTools();bindTimer();bindVisualLab();bindMathVisualLab();$(".math-test-tab").forEach(b=>b.onclick=()=>{$(".math-test-tab").forEach(x=>x.classList.toggle("active",x===b));renderMathTest(b.dataset.mathTest)});$(".math-mock-tab").forEach(b=>b.onclick=()=>{$(".math-mock-tab").forEach(x=>x.classList.toggle("active",x===b));renderMathMock(b.dataset.mathMock)});enhanceScrollExperience()
 }
 
 function enhanceScrollExperience(){
