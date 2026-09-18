@@ -155,7 +155,7 @@ function enhanceScrollExperience(){
   const reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const bar=document.createElement('div');bar.className='scroll-progress';bar.id='scrollProgress';document.body.appendChild(bar);
 
-  const revealTargets=$('main > section, .topic-card, .assessment-card, .prep-card, .formula-card, .memory-card, .module-row, .question, .workbench, .mcq, .resource-links a');
+  const revealTargets=$$('main > section, .topic-card, .assessment-card, .prep-card, .formula-card, .memory-card, .module-row, .question, .workbench, .mcq, .resource-links a');
   revealTargets.forEach((el,i)=>{el.classList.add('scroll-reveal');el.style.setProperty('--reveal-delay',Math.min((i%6)*55,275)+'ms')});
 
   if(!reduce && 'IntersectionObserver' in window){
@@ -183,7 +183,7 @@ function enhanceScrollExperience(){
   const onScroll=()=>{if(!ticking){requestAnimationFrame(update);ticking=true}};
   window.addEventListener('scroll',onScroll,{passive:true});update();
 
-  $('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
+  $$('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
     const href=a.getAttribute('href');
     if(!href || href.startsWith('#/')) return;
     const target=document.querySelector(href);
