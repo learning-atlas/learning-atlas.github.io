@@ -139,8 +139,49 @@ function bind(){
  $("#palette")?.addEventListener("click",e=>{if(e.target.id==="palette")e.currentTarget.classList.remove("open")});
  $$(".test-tab").forEach(b=>b.onclick=()=>{$$(".test-tab").forEach(x=>x.classList.toggle("active",x===b));renderTest(b.dataset.test)});
  $$(".level-tab").forEach(b=>b.onclick=()=>{$$(".level-tab").forEach(x=>x.classList.toggle("active",x===b));renderChallenge(+b.dataset.level)});
- bindDynamic();bindTools();bindTimer()
+ bindDynamic();bindTools();bindTimer();enhanceScrollExperience()
 }
+
+function enhanceScrollExperience(){
+  const reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const bar=document.createElement('div');bar.className='scroll-progress';bar.id='scrollProgress';document.body.appendChild(bar);
+
+  const revealTargets=$('main > section, .topic-card, .assessment-card, .prep-card, .formula-card, .memory-card, .module-row, .question, .workbench, .mcq, .resource-links a');
+  revealTargets.forEach((el,i)=>{el.classList.add('scroll-reveal');el.style.setProperty('--reveal-delay',Math.min((i%6)*55,275)+'ms')});
+
+  if(!reduce && 'IntersectionObserver' in window){
+    const io=new IntersectionObserver(entries=>entries.forEach(entry=>{
+      if(entry.isIntersecting){entry.target.classList.add('in-view');io.unobserve(entry.target)}
+    }),{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+    revealTargets.forEach(el=>io.observe(el));
+  }else revealTargets.forEach(el=>el.classList.add('in-view'));
+
+  const topbar=$('.topbar'), hero=$('.hero-art');
+  let ticking=false;
+  const update=()=>{
+    const y=window.scrollY||0;
+    const max=Math.max(document.documentElement.scrollHeight-window.innerHeight,1);
+    bar.style.transform='scaleX('+Math.min(y/max,1)+')';
+    if(topbar) topbar.classList.toggle('scrolled',y>18);
+    if(hero && !reduce){
+      const rect=hero.getBoundingClientRect();
+      const center=rect.top+rect.height/2-window.innerHeight/2;
+      const drift=Math.max(-18,Math.min(18,-center*.035));
+      hero.style.setProperty('--scroll-drift',drift+'px');
+    }
+    ticking=false;
+  };
+  const onScroll=()=>{if(!ticking){requestAnimationFrame(update);ticking=true}};
+  window.addEventListener('scroll',onScroll,{passive:true});update();
+
+  $('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
+    const href=a.getAttribute('href');
+    if(!href || href.startsWith('#/')) return;
+    const target=document.querySelector(href);
+    if(target){e.preventDefault();target.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})}
+  }));
+}
+
 function render(){
  const p=location.hash.replace(/^#/,"")||"/";let html;
  if(p==="/")html=home();else if(p==="/grade-10")html=grade();else if(p==="/grade-10/chemistry-honors")html=chemistry();else if(p==="/grade-10/chemistry-honors/study-guide")html=studyGuide();else if(p==="/grade-10/chemistry-honors/practice-tests")html=practiceTests();else if(p==="/grade-10/chemistry-honors/challenge-lab")html=challengeLab();else if(p.startsWith("/grade-10/chemistry-honors/topic/"))html=topic(p.split("/").pop());else if(p==="/grade-10/chemistry-honors/open-ended")html=openEnded();else if(p==="/grade-10/chemistry-honors/mock-exam")html=mockExam();else html=notfound();
