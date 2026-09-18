@@ -127,7 +127,7 @@ const visuals=(subject,level)=>getProfile(subject,level).visuals;
 const flatten=(tests,subject)=>{const diff={A:"simple",B:"simple",C:"medium",D:"complex",E:"complex",F:"fusion"};const out=[];Object.entries(tests||{}).forEach(([k,t])=>(t.questions||[]).forEach((q,i)=>out.push({...q,id:subject+"-"+k+"-"+i,difficulty:q.difficulty||diff[k]||"medium",sourceTest:k,courseLevels:q.courseLevels||["cp","honors","ap"]})));return out};
 const pool=(subject,level=storageLevel(subject))=>{
  const base=subject==="chemistry"?flatten(E.practiceTests,"chemistry"):flatten(M.practiceTests,"math");
- const extra=subject==="chemistry"?chemAP:mathAP;
+ const extra=(subject==="chemistry"?chemAP:mathAP).map((q,i)=>({...q,id:subject+"-ap-"+i}));
  const prof=getProfile(subject,level), allowedTopics=new Set(prof.topics);
  const keywordOk=q=>{
    if(level!=="ap")return true;
