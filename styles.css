@@ -323,3 +323,35 @@ body{overflow-x:hidden}
   .surface-summary{grid-template-columns:1fr 1fr}
   .actions{display:grid;grid-template-columns:1fr}.actions .btn{width:100%;justify-content:center}
 }
+
+/* Mission-driven Visual Lab */
+.viz-status{display:none!important}
+.lab-pro{background:
+  radial-gradient(circle at 15% 10%,rgba(83,115,220,.08),transparent 34%),
+  radial-gradient(circle at 85% 80%,rgba(120,88,198,.08),transparent 30%),
+  linear-gradient(145deg,#fbfcff,#f3f6fb);
+  border-color:#dfe6f1;box-shadow:inset 0 1px 0 rgba(255,255,255,.8)}
+.lab-mission{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:18px;padding:12px 14px;border:1px solid rgba(77,101,158,.16);border-radius:15px;background:rgba(255,255,255,.8);backdrop-filter:blur(10px)}
+.lab-mission div{display:grid;gap:3px}.lab-mission small{font-size:.56rem;letter-spacing:.14em;color:#758299;font-weight:950}.lab-mission strong{font-size:.86rem}.lab-mission span{font-size:.72rem;color:var(--muted);line-height:1.4}.lab-mission>b{flex:0 0 auto;padding:6px 9px;border-radius:999px;background:#eef2f8;color:#67758a;font-size:.62rem;letter-spacing:.04em}.lab-mission>b.complete{background:#e4f7ed;color:#23744b}
+.mission-complete{box-shadow:0 0 0 1px rgba(46,157,102,.25),0 16px 38px rgba(45,72,115,.08)}
+.mission-complete .lab-mission{border-color:rgba(46,157,102,.28)}
+.lab-action{border:0;border-radius:12px;background:var(--navy);color:#fff;padding:9px 13px;font-weight:850;font-size:.75rem;cursor:pointer;transition:transform .2s ease,box-shadow .2s ease}.lab-action:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(22,35,59,.16)}.lab-action.secondary{background:#fff;color:var(--navy);border:1px solid var(--line)}
+.preset-row,.sample-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.preset-row button,.sample-row button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 9px;font-size:.68rem;font-weight:800;color:#67758a;cursor:pointer}
+.density-stage{display:grid;grid-template-columns:1fr 150px;gap:14px;align-items:center}.density-meter{position:relative;min-height:118px;background:#101a2a;color:#fff;border-radius:18px;padding:16px;overflow:hidden}.density-meter small,.density-meter span{display:block;color:#9eacc1;font-size:.62rem}.density-meter strong{font-size:2.2rem;line-height:1.05;margin-top:10px}.density-meter i{position:absolute;left:0;right:auto;bottom:0;height:5px;width:40%;background:linear-gradient(90deg,#66a7ff,#8d70db);transition:width .28s cubic-bezier(.22,.61,.36,1)}
+.mass-block{display:grid;gap:4px;place-items:center;transition:transform .35s cubic-bezier(.22,.61,.36,1),border-radius .35s}.mass-block span{font-size:.6rem;opacity:.78;text-transform:uppercase;letter-spacing:.08em}.mass-block b{font-size:1.35rem}
+.sig-case{min-height:170px;display:grid;place-items:center;align-content:center;gap:14px}.sig-case>small{font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:#7e8b9f;font-weight:900}.sig-number{font-size:clamp(2.5rem,6vw,5rem);line-height:1;font-weight:950;letter-spacing:-.035em}.sig-number .ghost{color:#b8c2d0}.sig-number .sig{color:var(--navy)}.sig-number .power{font-size:.45em;color:#68778d;margin-left:.08em}.sig-answer{display:flex;gap:10px;align-items:center;font-size:.72rem;color:var(--muted)}.sig-answer strong{color:var(--blue)}
+.sig-timeline{height:3px;background:#dde5ef;border-radius:999px;overflow:hidden;margin:8px 0 14px}.sig-timeline i{display:block;height:100%;width:100%;transform-origin:left;background:linear-gradient(90deg,#2d63da,#745ed1)}@keyframes sigAutoProgress{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.isotope-balance{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;margin:28px 0 18px}.iso-end{display:grid;place-items:center;width:56px;height:56px;border-radius:15px;background:#fff;border:1px solid var(--line)}.iso-end b{font-size:1.2rem}.iso-end span{font-size:.58rem;color:var(--muted)}.isotope-track{position:relative;height:8px;background:#dfe6f0;border-radius:999px}.isotope-track i{position:absolute;top:50%;left:24%;width:22px;height:22px;border-radius:50%;transform:translate(-50%,-50%);background:var(--violet);box-shadow:0 0 0 6px rgba(114,95,212,.12);transition:left .22s}.isotope-track span{position:absolute;top:-32px;left:50%;transform:translateX(-50%);font-size:.72rem;font-weight:900}.abundance-stack{display:flex;height:10px;border-radius:999px;overflow:hidden;background:#e9edf4;margin:10px 0}.abundance-stack i{height:100%;transition:width .22s}.abundance-stack i:first-child{background:#5e87d9}.abundance-stack i:last-child{background:#8a66cf}
+.wave-stage{position:relative}.wave-stage svg{height:165px}.wave-stage path{stroke:var(--blue);stroke-width:4}.wave-stage .wave-reference{stroke:#b9c5d7;stroke-width:2;stroke-dasharray:6 6}.energy-meter{position:absolute;right:8px;top:8px;width:110px;background:rgba(255,255,255,.88);border:1px solid var(--line);border-radius:10px;padding:8px}.energy-meter small{font-size:.52rem;color:var(--muted);font-weight:900}.energy-meter i{display:block;height:4px;width:35%;margin-top:6px;background:linear-gradient(90deg,#5f8de8,#8b62ce);border-radius:999px;transition:width .2s}
+.molarity-stage{display:grid;grid-template-columns:1fr 140px;align-items:center;gap:14px}.concentration-gauge{position:relative;background:#101a2a;color:#fff;border-radius:18px;min-height:130px;padding:16px;overflow:hidden}.concentration-gauge small{font-size:.58rem;color:#9eacc1}.concentration-gauge strong{display:block;font-size:2.2rem;margin-top:18px}.concentration-gauge i{position:absolute;left:0;bottom:0;height:5px;width:20%;background:linear-gradient(90deg,#5f8de8,#805fcf);transition:width .2s}.beaker-scale{position:absolute;inset:0;background:repeating-linear-gradient(to top,transparent 0 18px,rgba(80,94,118,.15) 18px 19px);pointer-events:none}
+.pressure-gauge{height:6px;background:#e5eaf1;border-radius:999px;overflow:hidden;margin-top:10px}.pressure-gauge i{display:block;height:100%;width:36%;background:linear-gradient(90deg,#6ca6ff,#7e5ed3);transition:width .2s}.gas-space i{animation-duration:var(--gas-speed,var(--d,1s))}
+.kinetics-chart path{fill:none;stroke:var(--blue);stroke-width:4}.kinetics-chart [data-role="cat"]{stroke:#8b62cf;opacity:.35}.phase-chart path{fill:none;stroke:var(--blue);stroke-width:5}.phase-chart circle{fill:var(--violet)}
+.visual-card{transition:transform .28s cubic-bezier(.22,.61,.36,1),box-shadow .28s ease,border-color .28s ease}.visual-card:hover{transform:translateY(-4px);box-shadow:0 20px 44px rgba(29,45,70,.09);border-color:#cfd9e7}
+@media(max-width:680px){
+ .lab-mission{display:grid;grid-template-columns:1fr auto}
+ .density-stage,.molarity-stage{grid-template-columns:1fr}
+ .energy-meter{position:static;width:100%;margin-top:8px}
+ .sig-number{font-size:clamp(2rem,13vw,3.2rem)}
+ .sig-answer{flex-direction:column;gap:2px;text-align:center}
+}
+@media(prefers-reduced-motion:reduce){.sig-timeline i,.visual-card,.mass-block,.isotope-track i,.energy-meter i,.concentration-gauge i,.pressure-gauge i{animation:none!important;transition:none!important}}
