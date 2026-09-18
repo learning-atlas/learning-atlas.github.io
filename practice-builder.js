@@ -5,7 +5,47 @@ const shuffle=(arr,seed)=>{
  let x=(seed||Date.now())>>>0;const rnd=()=>{x=(1664525*x+1013904223)>>>0;return x/4294967296};
  const out=[...arr];for(let i=out.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[out[i],out[j]]=[out[j],out[i]]}return out;
 };
-const uniqueTopics=pool=>[...new Set(pool.map(q=>q.topic).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
+function canonicalTopic(subject,raw){
+ const t=normalize(raw);
+ if(subject==="chemistry"){
+  if(/measurement|lab|error|sig/.test(t))return "Measurement & Lab Data";
+  if(/density/.test(t))return "Density";
+  if(/atomic|isotope|periodic/.test(t))return "Atomic Structure & Periodicity";
+  if(/em radiation|photon|wave|radiation/.test(t))return "Electromagnetic Radiation";
+  if(/mole|particle/.test(t))return "Mole & Chemical Counting";
+  if(/nomenclature|bond|formula|imf/.test(t))return "Nomenclature & Bonding";
+  if(/state|phase/.test(t))return "States of Matter";
+  if(/solution|molarity|solubility|dilution/.test(t))return "Solutions & Concentration";
+  if(/stoich|yield|reaction/.test(t))return "Stoichiometry & Reactions";
+  if(/gas/.test(t))return "Gases";
+  if(/thermo|heat/.test(t))return "Thermochemistry";
+  if(/kinetic|rate/.test(t))return "Kinetics";
+  if(/equilibrium/.test(t))return "Equilibrium";
+  if(/acid|base|ph/.test(t))return "Acids & Bases";
+  if(/redox|electrochem|cell/.test(t))return "Redox & Electrochemistry";
+  if(/entropy|free energy/.test(t))return "Entropy & Free Energy";
+  if(/nuclear/.test(t))return "Nuclear Chemistry";
+  if(/ap experimental/.test(t))return "AP Experimental Reasoning";
+  return raw||"Mixed Chemistry";
+ }
+ if(/function/.test(t))return "Functions";
+ if(/system|inequal/.test(t))return "Systems & Inequalities";
+ if(/quadratic/.test(t))return "Quadratics";
+ if(/complex/.test(t))return "Complex Numbers";
+ if(/polynomial|factor|end behavior/.test(t))return "Polynomial Algebra & Graphs";
+ if(/radical/.test(t))return "Radicals & Rational Exponents";
+ if(/rational/.test(t))return "Rational Functions";
+ if(/exponential/.test(t))return "Exponential Functions";
+ if(/log/.test(t))return "Logarithms";
+ if(/trig|unit circle/.test(t))return "Trigonometry";
+ if(/sequence|series/.test(t))return "Sequences & Series";
+ if(/conic|analytic geometry|circle/.test(t))return "Analytic Geometry & Conics";
+ if(/probability|counting|data|residual/.test(t))return "Probability & Data";
+ if(/model|diagnostic|error detective|fusion/.test(t))return "Modeling & Diagnostics";
+ if(/ap precalculus/.test(t))return "AP Precalculus";
+ return raw||"Mixed Mathematics";
+}
+const uniqueTopics=(pool:pool.map(q=>({...q,builderTopic:canonicalTopic(subjectKey,q.topic)})),subject)=>[...new Set(pool.map(q=>canonicalTopic(subject,q.topic)).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
 const presetsFor=(subject,level)=>{
  const profile=LEVELS()?.getProfile(subject,level),d=profile?.defaults||{count:15,grading:"standard",levels:{simple:25,medium:35,complex:25,fusion:15}};
  return [
@@ -22,7 +62,7 @@ function subjectAdapter(subjectKey,level){
   name:profile?.title||(subjectKey==="math"?"Mathematics":"Chemistry"),
   route:subjectKey==="math"?"mathematics-honors":"chemistry-honors",
   level:profile?.key||level||"honors",
-  topics:uniqueTopics(pool),
+  topics:uniqueTopics(pool,subjectKey),
   pool,
   presets:presetsFor(subjectKey,profile?.key||level||"honors")
  };
@@ -36,7 +76,7 @@ function allocate(count,levels){
 function build(subjectKey,config){
  const level=config.courseLevel||LEVELS()?.getLevel(subjectKey)||"honors",s=subjectAdapter(subjectKey,level);if(!s)return null;
  const selected=(config.topics&&config.topics.length?config.topics:s.topics).map(normalize);
- const pool=s.pool.filter(q=>selected.includes(normalize(q.topic))||selected.includes("all"));
+ const pool=s.pool.filter(q=>selected.includes(normalize(q.builderTopic||q.topic))||selected.includes("all"));
  const profile=LEVELS()?.getProfile(subjectKey,level),levels=config.levels||profile?.defaults?.levels||{simple:25,medium:35,complex:25,fusion:15};
  const want=allocate(config.count||profile?.defaults?.count||15,levels),chosen=[],used=new Set(),seed=config.seed||Date.now();
  ["simple","medium","complex","fusion"].forEach((difficulty,di)=>{
