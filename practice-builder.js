@@ -8,10 +8,10 @@ const shuffle=(arr,seed)=>{
 function canonicalTopic(subject,raw){
  const t=normalize(raw);
  if(subject==="chemistry"){
-  if(/measurement|lab|error|sig/.test(t))return "Measurement & Lab Data";
+  if(/measurement|lab|error|sig|units/.test(t))return "Measurement & Lab Data";
   if(/density/.test(t))return "Density";
   if(/atomic|isotope|periodic/.test(t))return "Atomic Structure & Periodicity";
-  if(/em radiation|photon|wave|radiation/.test(t))return "Electromagnetic Radiation";
+  if(/em radiation|photon|wave|radiation|\bem\b/.test(t))return "Electromagnetic Radiation";
   if(/mole|particle/.test(t))return "Mole & Chemical Counting";
   if(/nomenclature|bond|formula|imf/.test(t))return "Nomenclature & Bonding";
   if(/state|phase/.test(t))return "States of Matter";
@@ -26,6 +26,7 @@ function canonicalTopic(subject,raw){
   if(/entropy|free energy/.test(t))return "Entropy & Free Energy";
   if(/nuclear/.test(t))return "Nuclear Chemistry";
   if(/ap experimental/.test(t))return "AP Experimental Reasoning";
+  if(/^fusion/.test(t))return "Cross-topic Fusion";
   return raw||"Mixed Chemistry";
  }
  if(/function/.test(t))return "Functions";
@@ -41,7 +42,8 @@ function canonicalTopic(subject,raw){
  if(/sequence|series/.test(t))return "Sequences & Series";
  if(/conic|analytic geometry|circle/.test(t))return "Analytic Geometry & Conics";
  if(/probability|counting|data|residual/.test(t))return "Probability & Data";
- if(/model|diagnostic|error detective|fusion/.test(t))return "Modeling & Diagnostics";
+ if(/model|diagnostic|error detective/.test(t))return "Modeling & Diagnostics";
+ if(/^fusion/.test(t))return "Cross-topic Fusion";
  if(/ap precalculus/.test(t))return "AP Precalculus";
  return raw||"Mixed Mathematics";
 }
