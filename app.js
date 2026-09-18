@@ -207,6 +207,7 @@ function bind(){
 
 function enhanceScrollExperience(){
   const reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('.scroll-progress').forEach(x=>x.remove());
   const bar=document.createElement('div');bar.className='scroll-progress';bar.id='scrollProgress';document.body.appendChild(bar);
 
   const revealTargets=$$('main > section, .topic-card, .assessment-card, .prep-card, .formula-card, .memory-card, .module-row, .question, .workbench, .mcq, .resource-links a');
@@ -235,6 +236,8 @@ function enhanceScrollExperience(){
     ticking=false;
   };
   const onScroll=()=>{if(!ticking){requestAnimationFrame(update);ticking=true}};
+  if(window.__atlasScrollHandler)window.removeEventListener('scroll',window.__atlasScrollHandler);
+  window.__atlasScrollHandler=onScroll;
   window.addEventListener('scroll',onScroll,{passive:true});update();
 
   $$('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
