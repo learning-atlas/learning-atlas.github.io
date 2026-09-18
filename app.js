@@ -304,17 +304,16 @@ function bindMathVisualLab(){
 
 function notfound(){return header()+'<main class="shell innerhero"><h1>Not found</h1><a class="btn" href="#/">Return home</a></main>'+footer()}
 function bindDynamic(){
- $$(".hint-btn").forEach(b=>b.onclick=()=>{const card=b.closest(".short-q");const p=card?.querySelector('[data-hint-panel="'+b.dataset.hint+'"]');if(p)p.classList.toggle("show")});
- $("#formulaSearch")?.addEventListener("input",e=>{const q=e.target.value.toLowerCase().trim();$(".vault-card").forEach(c=>c.hidden=q&&!c.dataset.search.includes(q))}); $("#mathFormulaSearch")?.addEventListener("input",e=>{const q=e.target.value.toLowerCase().trim();$("[data-math-search]").forEach(c=>c.hidden=q&&!c.dataset.mathSearch.includes(q))});
-
- $$(".reveal-reasoning").forEach(b=>b.onclick=()=>b.closest(".short-q,.mcq,.workbench")?.querySelector(".reasoning-panel")?.classList.toggle("show"));
- $$(".scratch-toggle").forEach(b=>b.onclick=()=>$("#scratch-"+b.dataset.scratch)?.classList.toggle("show"));
- $$("[data-note]").forEach(t=>t.addEventListener("input",()=>store.set("note:"+t.dataset.note,t.value)));
- $$(".save-answer").forEach(b=>b.onclick=()=>{const input=$('[data-save="'+b.dataset.key+'"]');if(input){store.set("answer:"+b.dataset.key,input.value);b.textContent="Saved"}});
- $$("[data-save]").forEach(i=>i.value=store.get("answer:"+i.dataset.save,i.value||""));
- $$(".save-work").forEach(b=>b.onclick=()=>{const input=$('[data-final="'+b.dataset.key+'"]');if(input){store.set("final:"+b.dataset.key,input.value);b.textContent="Saved"}});
+ document.querySelectorAll(".hint-btn").forEach(b=>b.onclick=()=>{const card=b.closest(".short-q");const p=card?.querySelector('[data-hint-panel="'+b.dataset.hint+'"]');if(p)p.classList.toggle("show")});
+ $("#formulaSearch")?.addEventListener("input",ev=>{const q=ev.target.value.toLowerCase().trim();document.querySelectorAll(".vault-card").forEach(card=>card.hidden=q&&!card.dataset.search.includes(q))});
+ $("#mathFormulaSearch")?.addEventListener("input",ev=>{const q=ev.target.value.toLowerCase().trim();document.querySelectorAll("[data-math-search]").forEach(card=>card.hidden=q&&!card.dataset.mathSearch.includes(q))});
+ document.querySelectorAll(".reveal-reasoning").forEach(b=>b.onclick=()=>b.closest(".short-q,.mcq,.workbench")?.querySelector(".reasoning-panel")?.classList.toggle("show"));
+ document.querySelectorAll(".scratch-toggle").forEach(b=>b.onclick=()=>$("#scratch-"+b.dataset.scratch)?.classList.toggle("show"));
+ document.querySelectorAll("[data-note]").forEach(t=>t.addEventListener("input",()=>store.set("note:"+t.dataset.note,t.value)));
+ document.querySelectorAll(".save-answer").forEach(b=>b.onclick=()=>{const input=$('[data-save="'+b.dataset.key+'"]');if(input){store.set("answer:"+b.dataset.key,input.value);b.textContent="Saved"}});
+ document.querySelectorAll("[data-save]").forEach(i=>i.value=store.get("answer:"+i.dataset.save,i.value||""));
+ document.querySelectorAll(".save-work").forEach(b=>b.onclick=()=>{const input=$('[data-final="'+b.dataset.key+'"]');if(input){store.set("final:"+b.dataset.key,input.value);b.textContent="Saved"}});
 }
-
 function bindVisualLab(){
  const cards=$$("[data-widget]");
  if(!cards.length)return;
@@ -393,13 +392,15 @@ function bindTimer(){
 }
 function bind(){
  $("#cmdBtn")?.addEventListener("click",()=>$("#palette")?.classList.add("open"));
- $$("[data-module]").forEach(h=>h.onclick=()=>h.closest(".module-row").classList.toggle("open"));
- $("#palette")?.addEventListener("click",e=>{if(e.target.id==="palette")e.currentTarget.classList.remove("open")});
- $(".test-tab[data-test]").forEach(b=>b.onclick=()=>{$(".test-tab[data-test]").forEach(x=>x.classList.toggle("active",x===b));renderTest(b.dataset.test)});
- $$(".level-tab").forEach(b=>b.onclick=()=>{$$(".level-tab").forEach(x=>x.classList.toggle("active",x===b));renderChallenge(+b.dataset.level)});
- bindDynamic();bindTools();bindTimer();bindVisualLab();bindMathVisualLab();$(".math-test-tab").forEach(b=>b.onclick=()=>{$(".math-test-tab").forEach(x=>x.classList.toggle("active",x===b));renderMathTest(b.dataset.mathTest)});$(".math-mock-tab").forEach(b=>b.onclick=()=>{$(".math-mock-tab").forEach(x=>x.classList.toggle("active",x===b));renderMathMock(b.dataset.mathMock)});enhanceScrollExperience()
+ document.querySelectorAll("[data-module]").forEach(h=>h.onclick=()=>h.closest(".module-row")?.classList.toggle("open"));
+ $("#palette")?.addEventListener("click",ev=>{if(ev.target.id==="palette")ev.currentTarget.classList.remove("open")});
+ document.querySelectorAll(".test-tab[data-test]").forEach(b=>b.onclick=()=>{document.querySelectorAll(".test-tab[data-test]").forEach(x=>x.classList.toggle("active",x===b));renderTest(b.dataset.test)});
+ document.querySelectorAll(".level-tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".level-tab").forEach(x=>x.classList.toggle("active",x===b));renderChallenge(+b.dataset.level)});
+ bindDynamic();bindTools();bindTimer();bindVisualLab();bindMathVisualLab();
+ document.querySelectorAll(".math-test-tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".math-test-tab").forEach(x=>x.classList.toggle("active",x===b));renderMathTest(b.dataset.mathTest)});
+ document.querySelectorAll(".math-mock-tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".math-mock-tab").forEach(x=>x.classList.toggle("active",x===b));renderMathMock(b.dataset.mathMock)});
+ enhanceScrollExperience()
 }
-
 function enhanceScrollExperience(){
  document.querySelectorAll(".scroll-progress").forEach(x=>x.remove());
  const bar=document.createElement("div");bar.className="scroll-progress";document.body.appendChild(bar);
