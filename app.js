@@ -24,10 +24,47 @@ function grade(){
  const g=D.grade,s=D.subject,mc=D.topics.reduce((a,t)=>a+t.modules.length,0);
  return header("Grade 10")+'<main><section class="shell innerhero">'+crumbs([["Learning Atlas","#/"],[g.name,""]])+'<div class="eyebrow"><span class="signal"></span>Academic path</div><h1>'+g.name+'</h1><p class="lead">Subjects appear here only after usable material exists.</p></section><section class="shell section"><div class="sectionhead"><div><div class="eyebrow">Subjects</div><h2>Current subject.</h2></div><p>This page expands naturally when Biology Honors, Physics Honors, AP Seminar, or another real subject is added.</p></div><div class="subject-grid"><a class="subject-card" href="#/grade-10/chemistry-honors"><div><div class="micro">Honors Science</div><div class="subject-title">'+s.name+'<br>'+s.subtitle+'</div><p>'+s.description+'</p></div><div class="countbox"><div class="count"><strong>'+D.topics.length+'</strong><span>topics</span></div><div class="count"><strong>'+mc+'</strong><span>modules</span></div><div class="count"><strong>5</strong><span>practice modes</span></div><div class="count"><strong>'+(D.openQuestions.length+D.mockQuestions.length)+'</strong><span>constructed prompts</span></div></div></a></div></section></main>'+footer()
 }
+
+function topicInsight(t){
+ const map={
+  "measurement-matter":["Measurement rules decide whether an answer is believable.","Sig figs · unit cancellation","Do not round early or mix units."],
+  "density":["Density links mass to occupied space and turns measurements into material evidence.","D = m / V","Volume errors reverse the density direction."],
+  "isotopes":["Atomic identity comes from protons; isotope averages come from abundance-weighted masses.","A = p + n · weighted mean","Percent abundance must become a fraction."],
+  "em-radiation":["Wavelength and frequency move in opposite directions when wave speed is fixed.","c = λν","Convert wavelength to meters first."],
+  "lab-data":["Good chemistry depends on the quality of measurements, not just arithmetic.","% error · slope","Precision is not the same as accuracy."],
+  "mole-counting":["The mole bridges measurable mass and invisible particle count.","N = nNₐ","Use molar mass between grams and moles."],
+  "solutions":["Concentration compares amount of solute with total solution volume.","M = n/V · M₁V₁=M₂V₂","Molarity uses liters of solution."],
+  "stoichiometry":["Balanced coefficients are quantitative conversion factors between substances.","mole ratios · % yield","Balance first, then convert."],
+  "thermochemistry":["Heat flow connects mass, temperature change, and material properties.","q = mcΔT","Track the sign and energy direction."],
+  "gases":["Gas pressure, volume, and temperature are coupled through particle motion.","P₁V₁/T₁=P₂V₂/T₂","Temperature ratios require Kelvin."],
+  "periodic-electrons":["Periodic position reveals repeating electron patterns and chemical behavior.","valence electrons · trends","Do not memorize trends without direction."],
+  "formulas-nomenclature":["Chemical names and formulas encode composition and charge balance.","charge neutrality","Do not change subscripts when balancing equations."],
+  "bonding":["Bonding explains structure, polarity, and many physical properties.","Lewis structures · polarity","Bond polarity and molecular polarity are not identical."],
+  "states-matter":["Phase behavior comes from particle motion and intermolecular attraction.","heating curve","Plateaus still absorb energy."],
+  "water-solubility":["Solubility depends on particle interactions and the nature of the solvent.","solubility · electrolytes","Dissolved does not always mean ionized."],
+  "kinetics":["Reaction rate depends on successful collisions and activation energy.","rate · activation energy","A catalyst changes rate, not ΔG."],
+  "equilibrium":["Equilibrium is dynamic: forward and reverse rates match while reactions continue.","Q vs K","Equal rates do not mean equal amounts."],
+  "acids-bases":["Acid-base chemistry tracks proton transfer and logarithmic concentration.","pH = −log[H⁺]","One pH unit is a 10× change."],
+  "redox-electrochem":["Redox tracks electron transfer and converts chemical change into electrical work.","OIL RIG","Anode is oxidation; cathode is reduction."],
+  "entropy-free-energy":["Spontaneity depends on enthalpy, entropy, and temperature.","ΔG = ΔH − TΔS","Spontaneous does not mean fast."],
+  "nuclear":["Nuclear chemistry changes the nucleus and follows mass-number/atomic-number conservation.","half-life","Nuclear equations balance A and Z."]
+ };
+ return map[t.id]||[t.description,"Core relationship","Check units, assumptions, and reasonableness."]
+}
+function mobileNav(active="Chemistry"){
+ return '<nav class="mobile-dock" aria-label="Mobile navigation"><a href="#/"><span>⌂</span><b>Home</b></a><a href="#/grade-10/chemistry-honors" class="'+(active==="Chemistry"?"active":"")+'"><span>◎</span><b>Chem</b></a><a href="#/grade-10/chemistry-honors/visual-lab" class="'+(active==="Visual Lab"?"active":"")+'"><span>◌</span><b>Visuals</b></a><a href="#/grade-10/chemistry-honors/practice-tests" class="'+(active==="Practice Tests"?"active":"")+'"><span>✓</span><b>Tests</b></a><button id="mobileTools"><span>⌁</span><b>Tools</b></button></nav>'
+}
+function quickFormulaStrip(){
+ const cards=((E.phase1&&E.phase1.formulaCards)||[]).slice(0,6);
+ return '<section class="shell surface-strip"><div class="surface-strip-head"><div><div class="eyebrow">At-a-glance</div><h2>Keep the essentials in sight.</h2></div><a href="#/grade-10/chemistry-honors/formula-vault">Full Formula Vault ↗</a></div><div class="surface-formulas">'+cards.map(f=>'<article><strong>'+f[0]+'</strong><code>'+f[1]+'</code><span>'+f[2]+'</span></article>').join("")+'</div></section>'
+}
+function topicIntelligenceGrid(){
+ return '<section class="shell section"><div class="sectionhead"><div><div class="eyebrow">Topic intelligence</div><h2>See the idea before opening the lesson.</h2></div><p>Each card surfaces the big idea, governing relationship, and common trap so the student can scan the course without drilling through pages.</p></div><div class="topic-intelligence-grid">'+D.topics.map((t,i)=>{const x=topicInsight(t);return '<article class="topic-intel"><div class="topic-intel-top"><span>'+String(i+1).padStart(2,"0")+'</span><a href="#/grade-10/chemistry-honors/topic/'+t.id+'">Open topic ↗</a></div><h3>'+t.name+'</h3><p>'+x[0]+'</p><div class="intel-row"><small>KEY RELATIONSHIP</small><strong>'+x[1]+'</strong></div><div class="intel-row trap"><small>WATCH FOR</small><strong>'+x[2]+'</strong></div><div class="module-chip-row">'+t.modules.slice(0,4).map(m=>'<span>'+m.name+'</span>').join("")+(t.modules.length>4?'<span>+'+(t.modules.length-4)+' more</span>':"")+'</div></article>'}).join("")+'</div></section>'
+}
+
 function chemistry(){
- return header("Chemistry")+'<main><section class="shell innerhero">'+crumbs([["Learning Atlas","#/"],["Grade 10","#/grade-10"],[D.subject.name,""]])+'<div class="eyebrow"><span class="signal"></span>Grade 10 · Honors Science</div><h1>'+D.subject.name+'<br><span class="gradient">'+D.subject.subtitle+'</span></h1><p class="lead">A one-stop prep workspace: learn concepts, memorize essentials, practice at multiple levels, write out reasoning, use scratch tools, and simulate the exam.</p></section>'+prepOverview()+learningSystemStrip()+
- '<section class="shell section"><div class="sectionhead"><div><div class="eyebrow">Topics</div><h2>Choose the chemistry problem space.</h2></div><p>Each topic can contain any number of modules. Modules open into explanation, worked model, and targeted practice.</p></div><div class="topic-grid">'+D.topics.map((t,i)=>'<a class="topic-card" href="#/grade-10/chemistry-honors/topic/'+t.id+'"><div class="topic-index">0'+(i+1)+'</div><h3>'+t.name+'</h3><p>'+t.description+'</p><div class="module-preview">'+t.modules.slice(0,3).map(m=>'<span>'+m.name+'</span>').join("")+(t.modules.length>3?'<span>+'+(t.modules.length-3)+' more</span>':"")+'</div><div class="topicfoot"><span>'+t.modules.length+' modules</span><span class="roundarrow">↗</span></div></a>').join("")+'</div></section>'+
- assessmentHub()+'<section class="shell section"><div class="reasoning"><span>GIVEN</span><b>→</b><span>FIND</span><b>→</b><span>PATH</span><b>→</b><span>UNITS</span><b>→</b><span>SOLVE</span><b>→</b><span>SIG FIGS</span><b>→</b><span>CHECK</span></div></section>'+resourcesStrip()+'</main>'+footer()
+ const moduleCount=D.topics.reduce((n,t)=>n+t.modules.length,0);
+ return header("Chemistry")+'<main><section class="shell innerhero compact-hero">'+crumbs([["Learning Atlas","#/"],["Grade 10","#/grade-10"],[D.subject.name,""]])+'<div class="eyebrow"><span class="signal"></span>Grade 10 · Honors Science</div><div class="hero-split"><div><h1>'+D.subject.name+'<br><span class="gradient">'+D.subject.subtitle+'</span></h1><p class="lead">Learn, visualize, practice, and test from one page. The important chemistry is surfaced first so students spend less time navigating and more time understanding.</p><div class="actions"><a class="btn primary" href="#/grade-10/chemistry-honors/study-guide">Start learning</a><a class="btn" href="#/grade-10/chemistry-honors/visual-lab">Open Visual Lab</a></div></div><div class="surface-summary"><article><strong>'+D.topics.length+'</strong><span>topic areas</span></article><article><strong>'+moduleCount+'</strong><span>learning modules</span></article><article><strong>6</strong><span>study modes</span></article><article><strong>70%+</strong><span>broad textbook coverage</span></article></div></div></section>'+quickFormulaStrip()+learningSystemStrip()+topicIntelligenceGrid()+assessmentHub()+'<section class="shell section"><div class="reasoning"><span>GIVEN</span><b>→</b><span>FIND</span><b>→</b><span>PATH</span><b>→</b><span>UNITS</span><b>→</b><span>SOLVE</span><b>→</b><span>CHECK</span></div></section>'+resourcesStrip()+'</main>'+footer()
 }
 function prepOverview(){
  return '<section class="shell section"><div class="prep-hero"><div><div class="eyebrow">Prep system</div><h2>Know what to do before you solve.</h2><p>Use the study guide for formulas, memory cues, habits, and a four-pass preparation sequence. Then choose the practice mode that matches your confidence.</p><div class="actions"><a class="btn primary" href="#/grade-10/chemistry-honors/study-guide">Open Study Guide</a><a class="btn" href="#/grade-10/chemistry-honors/practice-tests">Practice Tests</a></div></div><div class="prep-stats"><div><strong>4</strong><span>prep passes</span></div><div><strong>6</strong><span>formula cards</span></div><div><strong>3</strong><span>graded tests</span></div><div><strong>4</strong><span>challenge levels</span></div></div></div></section>'
@@ -89,8 +126,9 @@ function studyGuide(){
 }
 function topic(id){
  const t=D.topics.find(x=>x.id===id);if(!t)return notfound();
- return header("Chemistry")+'<main><section class="shell innerhero">'+chemCrumbs(t.name)+'<div class="eyebrow"><span class="signal"></span>Chemistry Topic</div><h1>'+t.name+'</h1><p class="lead">'+t.description+'</p></section>'+
- '<section class="shell section"><div class="sectionhead"><div><div class="eyebrow">Modules</div><h2>'+t.modules.length+' focused modules.</h2></div><p>Read the model, answer in your own words, then reveal the reasoning.</p></div><div class="module-list">'+t.modules.map((m,i)=>'<article class="module-row"><div class="module-head" data-module><div class="module-num">'+String(i+1).padStart(2,"0")+'</div><div class="module-title"><strong>'+m.name+'</strong><small>'+m.summary+'</small></div><span class="module-type">'+m.type+'</span></div><div class="module-body"><div class="learnbox"><div class="note"><label>LEARN</label>'+m.learn+'</div><div class="note"><label>WORKED MODEL</label>'+m.example+'</div></div><div class="practice"><div class="micro">Targeted practice</div>'+m.practice.map((p,j)=>guidedBlock(m.id+"-"+j,p[0],p[1],"Compare your method, units, and final result.")).join("")+'</div></div></article>').join("")+'</div></section></main>'+footer()
+ const insight=topicInsight(t);
+ return header("Chemistry")+'<main><section class="shell innerhero compact-hero">'+chemCrumbs(t.name)+'<div class="eyebrow"><span class="signal"></span>Chemistry Topic</div><h1>'+t.name+'</h1><p class="lead">'+t.description+'</p><div class="topic-brief"><article><small>BIG IDEA</small><strong>'+insight[0]+'</strong></article><article><small>KEY RELATIONSHIP</small><strong>'+insight[1]+'</strong></article><article class="warn"><small>COMMON TRAP</small><strong>'+insight[2]+'</strong></article></div></section>'+
+ '<section class="shell section"><div class="sectionhead"><div><div class="eyebrow">Learn on the page</div><h2>'+t.modules.length+' modules, already surfaced.</h2></div><p>No accordion hunting. The concept, worked model, and guided practice are visible in one continuous study flow.</p></div><div class="module-grid">'+t.modules.map((m,i)=>'<article class="module-row open insight-module"><div class="module-head static"><div class="module-num">'+String(i+1).padStart(2,"0")+'</div><div class="module-title"><strong>'+m.name+'</strong><small>'+m.summary+'</small></div><span class="module-type">'+m.type+'</span></div><div class="module-body"><div class="learnbox"><div class="note"><label>UNDERSTAND</label>'+m.learn+'</div><div class="note"><label>WORKED MODEL</label>'+m.example+'</div></div><div class="practice"><div class="micro">Guided practice</div>'+m.practice.map((p,j)=>guidedBlock(m.id+"-"+j,p[0],p[1],"Compare your method, units, and final result.")).join("")+'</div><div class="module-recap"><strong>One-minute recap</strong><p>'+m.learn+'</p><span>Explain this in your own words before moving on.</span></div></div></article>').join("")+'</div></section></main>'+footer()
 }
 function shortAnswer(id,prompt,answer,reason){
  return '<article class="short-q"><h4>'+prompt+'</h4><div class="answer-row"><input class="student-answer" data-save="'+id+'" placeholder="Type your answer"><button class="mini-btn save-answer" data-key="'+id+'">Save</button><button class="mini-btn reveal-reasoning">Check reasoning</button></div><div class="reasoning-panel"><strong>Expected answer:</strong> '+answer+'<br><span>'+reason+'</span></div></article>'
@@ -241,52 +279,21 @@ function bind(){
 }
 
 function enhanceScrollExperience(){
-  const reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  document.querySelectorAll('.scroll-progress').forEach(x=>x.remove());
-  const bar=document.createElement('div');bar.className='scroll-progress';bar.id='scrollProgress';document.body.appendChild(bar);
-
-  const revealTargets=$$('main > section, .topic-card, .assessment-card, .prep-card, .formula-card, .memory-card, .module-row, .question, .workbench, .mcq, .resource-links a');
-  revealTargets.forEach((el,i)=>{el.classList.add('scroll-reveal');el.style.setProperty('--reveal-delay',Math.min((i%6)*55,275)+'ms')});
-
-  if(!reduce && 'IntersectionObserver' in window){
-    const io=new IntersectionObserver(entries=>entries.forEach(entry=>{
-      if(entry.isIntersecting){entry.target.classList.add('in-view');io.unobserve(entry.target)}
-    }),{threshold:.12,rootMargin:'0px 0px -8% 0px'});
-    revealTargets.forEach(el=>io.observe(el));
-  }else revealTargets.forEach(el=>el.classList.add('in-view'));
-
-  const topbar=$('.topbar'), hero=$('.hero-art');
-  let ticking=false;
-  const update=()=>{
-    const y=window.scrollY||0;
-    const max=Math.max(document.documentElement.scrollHeight-window.innerHeight,1);
-    bar.style.transform='scaleX('+Math.min(y/max,1)+')';
-    if(topbar) topbar.classList.toggle('scrolled',y>18);
-    if(hero && !reduce){
-      const rect=hero.getBoundingClientRect();
-      const center=rect.top+rect.height/2-window.innerHeight/2;
-      const drift=Math.max(-18,Math.min(18,-center*.035));
-      hero.style.setProperty('--scroll-drift',drift+'px');
-    }
-    ticking=false;
-  };
-  const onScroll=()=>{if(!ticking){requestAnimationFrame(update);ticking=true}};
-  if(window.__atlasScrollHandler)window.removeEventListener('scroll',window.__atlasScrollHandler);
-  window.__atlasScrollHandler=onScroll;
-  window.addEventListener('scroll',onScroll,{passive:true});update();
-
-  $$('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
-    const href=a.getAttribute('href');
-    if(!href || href.startsWith('#/')) return;
-    const target=document.querySelector(href);
-    if(target){e.preventDefault();target.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})}
-  }));
+ document.querySelectorAll(".scroll-progress").forEach(x=>x.remove());
+ const bar=document.createElement("div");bar.className="scroll-progress";document.body.appendChild(bar);
+ const topbar=$(".topbar");
+ let ticking=false;
+ const update=()=>{const y=window.scrollY||0,max=Math.max(document.documentElement.scrollHeight-window.innerHeight,1);bar.style.transform="scaleX("+Math.min(y/max,1)+")";topbar?.classList.toggle("scrolled",y>18);ticking=false};
+ const onScroll=()=>{if(!ticking){requestAnimationFrame(update);ticking=true}};
+ if(window.__atlasScrollHandler)window.removeEventListener("scroll",window.__atlasScrollHandler);
+ window.__atlasScrollHandler=onScroll;
+ window.addEventListener("scroll",onScroll,{passive:true});
+ update();
 }
-
 function render(){
  const p=location.hash.replace(/^#/,"")||"/";let html;
  if(p==="/")html=home();else if(p==="/grade-10")html=grade();else if(p==="/grade-10/chemistry-honors")html=chemistry();else if(p==="/grade-10/chemistry-honors/study-guide")html=studyGuide();else if(p==="/grade-10/chemistry-honors/visual-lab")html=visualLab();else if(p==="/grade-10/chemistry-honors/formula-vault")html=formulaVault();else if(p==="/grade-10/chemistry-honors/practice-tests")html=practiceTests();else if(p==="/grade-10/chemistry-honors/challenge-lab")html=challengeLab();else if(p==="/grade-10/chemistry-honors/fusion-lab")html=fusionLab();else if(p.startsWith("/grade-10/chemistry-honors/topic/"))html=topic(p.split("/").pop());else if(p==="/grade-10/chemistry-honors/open-ended")html=openEnded();else if(p==="/grade-10/chemistry-honors/mock-exam")html=mockExam();else html=notfound();
- $("#app").innerHTML=html+palette()+utilityDock();bind();if(p.endsWith("/practice-tests"))renderTest($("#testMount")?.dataset.current||"A");if(p.endsWith("/challenge-lab"))renderChallenge(1);window.scrollTo({top:0,behavior:"auto"})
+ $("#app").innerHTML=html+palette()+utilityDock()+mobileNav((p.includes("visual-lab")?"Visual Lab":p.includes("practice-tests")?"Practice Tests":"Chemistry"));bind();$("#mobileTools")?.addEventListener("click",()=>$("#toolDrawer")?.classList.add("open"));if(p.endsWith("/practice-tests"))renderTest($("#testMount")?.dataset.current||"A");if(p.endsWith("/challenge-lab"))renderChallenge(1);window.scrollTo(0,0)
 }
 window.addEventListener("hashchange",render);
 document.addEventListener("keydown",e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==="k"){e.preventDefault();$("#palette")?.classList.add("open");$("#palInput")?.focus()}if(e.key==="Escape"){$("#palette")?.classList.remove("open");$("#toolDrawer")?.classList.remove("open")}});
