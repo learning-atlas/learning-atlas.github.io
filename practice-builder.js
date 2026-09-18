@@ -1,102 +1,69 @@
 (function(){
-const E=window.LEARNING_ATLAS_ENHANCEMENTS||{}, M=window.LEARNING_ATLAS_MATH||{};
+const LEVELS=()=>window.LEARNING_ATLAS_LEVELS;
 const normalize=s=>String(s||"").trim().toLowerCase();
 const shuffle=(arr,seed)=>{
-  let x=(seed||Date.now())>>>0;
-  const rnd=()=>{x=(1664525*x+1013904223)>>>0;return x/4294967296};
-  const out=[...arr];
-  for(let i=out.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[out[i],out[j]]=[out[j],out[i]]}
-  return out;
+ let x=(seed||Date.now())>>>0;const rnd=()=>{x=(1664525*x+1013904223)>>>0;return x/4294967296};
+ const out=[...arr];for(let i=out.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[out[i],out[j]]=[out[j],out[i]]}return out;
 };
-const difficultyFromTest=k=>({A:"simple",B:"simple",C:"medium",D:"complex",E:"complex",F:"fusion"}[k]||"medium");
-const flattenTests=(tests,subject)=>{
-  const out=[];
-  Object.entries(tests||{}).forEach(([key,t])=>(t.questions||[]).forEach((q,i)=>out.push({
-    id:subject+"-"+key+"-"+i,
-    subject,test:key,title:t.title||key,
-    difficulty:difficultyFromTest(key),
-    topic:q.topic||"Mixed",
-    q:q.q,options:q.options,answer:q.answer,why:q.why
-  })));
-  return out;
-};
-const chemPool=flattenTests(E.practiceTests,"chemistry");
-const mathPool=flattenTests(M.practiceTests,"math");
 const uniqueTopics=pool=>[...new Set(pool.map(q=>q.topic).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
-const subjects={
-  chemistry:{
-    key:"chemistry",name:"Chemistry Honors",route:"chemistry-honors",
-    topics:uniqueTopics(chemPool),pool:chemPool,
-    presets:[
-      {id:"quick",name:"Quick 10",desc:"10 mixed questions · balanced difficulty",count:10,levels:{simple:35,medium:35,complex:20,fusion:10},grading:"standard"},
-      {id:"confidence",name:"Confidence Builder",desc:"15 questions · simple → medium",count:15,levels:{simple:60,medium:40,complex:0,fusion:0},grading:"lenient"},
-      {id:"honors",name:"Honors Sprint",desc:"15 questions · complex weighted",count:15,levels:{simple:0,medium:20,complex:60,fusion:20},grading:"strict"},
-      {id:"fusion",name:"Fusion Challenge",desc:"12 cross-topic questions",count:12,levels:{simple:0,medium:10,complex:20,fusion:70},grading:"strict"}
-    ]
-  },
-  math:{
-    key:"math",name:"Mathematics Honors",route:"mathematics-honors",
-    topics:uniqueTopics(mathPool),pool:mathPool,
-    presets:[
-      {id:"quick",name:"Quick 10",desc:"10 mixed questions · balanced difficulty",count:10,levels:{simple:35,medium:35,complex:20,fusion:10},grading:"standard"},
-      {id:"confidence",name:"Confidence Builder",desc:"15 questions · simple → medium",count:15,levels:{simple:60,medium:40,complex:0,fusion:0},grading:"lenient"},
-      {id:"honors",name:"Honors Sprint",desc:"15 questions · complex weighted",count:15,levels:{simple:0,medium:20,complex:60,fusion:20},grading:"strict"},
-      {id:"fusion",name:"Fusion Challenge",desc:"12 cross-topic questions",count:12,levels:{simple:0,medium:10,complex:20,fusion:70},grading:"strict"}
-    ]
-  }
+const presetsFor=(subject,level)=>{
+ const profile=LEVELS()?.getProfile(subject,level),d=profile?.defaults||{count:15,grading:"standard",levels:{simple:25,medium:35,complex:25,fusion:15}};
+ return [
+  {id:"quick",name:"Quick 10",desc:"10 mixed questions · balanced difficulty",count:10,levels:level==="ap"?{simple:5,medium:25,complex:45,fusion:25}:{simple:35,medium:35,complex:20,fusion:10},grading:d.grading},
+  {id:"confidence",name:"Confidence Builder",desc:"15 questions · fluency first",count:15,levels:level==="ap"?{simple:10,medium:45,complex:35,fusion:10}:{simple:60,medium:40,complex:0,fusion:0},grading:level==="ap"?"standard":"lenient"},
+  {id:"level",name:(profile?.label||"Course")+" Default",desc:"Uses the selected course-level defaults",count:d.count,levels:d.levels,grading:d.grading},
+  {id:"fusion",name:"Fusion Challenge",desc:"12 cross-topic questions",count:12,levels:{simple:0,medium:10,complex:25,fusion:65},grading:level==="cp"?"standard":"strict"}
+ ];
 };
+function subjectAdapter(subjectKey,level){
+ const L=LEVELS(),profile=L?.getProfile(subjectKey,level),pool=L?.pool(subjectKey,level)||[];
+ return {
+  key:subjectKey,
+  name:profile?.title||(subjectKey==="math"?"Mathematics":"Chemistry"),
+  route:subjectKey==="math"?"mathematics-honors":"chemistry-honors",
+  level:profile?.key||level||"honors",
+  topics:uniqueTopics(pool),
+  pool,
+  presets:presetsFor(subjectKey,profile?.key||level||"honors")
+ };
+}
 function allocate(count,levels){
-  const order=["simple","medium","complex","fusion"], raw=order.map(k=>({k,v:(levels[k]||0)/100*count}));
-  const base=raw.map(x=>({k:x.k,n:Math.floor(x.v),frac:x.v-Math.floor(x.v)}));
-  let used=base.reduce((n,x)=>n+x.n,0);
-  base.sort((a,b)=>b.frac-a.frac);
-  for(let i=0;used<count;i++,used++)base[i%base.length].n++;
-  return Object.fromEntries(base.map(x=>[x.k,x.n]));
+ const order=["simple","medium","complex","fusion"],raw=order.map(k=>({k,v:(levels[k]||0)/100*count}));
+ const base=raw.map(x=>({k:x.k,n:Math.floor(x.v),frac:x.v-Math.floor(x.v)}));let used=base.reduce((n,x)=>n+x.n,0);
+ base.sort((a,b)=>b.frac-a.frac);for(let i=0;used<count;i++,used++)base[i%base.length].n++;
+ return Object.fromEntries(base.map(x=>[x.k,x.n]));
 }
 function build(subjectKey,config){
-  const s=subjects[subjectKey];if(!s)return null;
-  const selected=(config.topics&&config.topics.length?config.topics:s.topics).map(normalize);
-  const pool=s.pool.filter(q=>selected.includes(normalize(q.topic))||selected.includes("all"));
-  const levels=config.levels||{simple:25,medium:35,complex:25,fusion:15};
-  const allocation=allocate(config.count||15,levels), chosen=[], used=new Set();
-  const seed=config.seed||Date.now();
-  ["simple","medium","complex","fusion"].forEach((level,li)=>{
-    let candidates=shuffle(pool.filter(q=>q.difficulty===level),seed+li*997);
-    let need=allocation[level]||0;
-    for(const q of candidates){if(!need)break;if(!used.has(q.id)){chosen.push(q);used.add(q.id);need--}}
-  });
-  if(chosen.length<(config.count||15)){
-    const fallback=shuffle(pool.filter(q=>!used.has(q.id)),seed+8081);
-    for(const q of fallback){if(chosen.length>=(config.count||15))break;chosen.push(q);used.add(q.id)}
-  }
-  return {
-    id:"pb-"+subjectKey+"-"+seed,
-    subject:subjectKey,
-    grading:config.grading||"standard",
-    feedback:config.feedback||"end",
-    topics:config.topics&&config.topics.length?config.topics:s.topics,
-    levels,count:chosen.length,requestedCount:config.count||15,
-    createdAt:Date.now(),questions:shuffle(chosen,seed+191)
-  };
+ const level=config.courseLevel||LEVELS()?.getLevel(subjectKey)||"honors",s=subjectAdapter(subjectKey,level);if(!s)return null;
+ const selected=(config.topics&&config.topics.length?config.topics:s.topics).map(normalize);
+ const pool=s.pool.filter(q=>selected.includes(normalize(q.topic))||selected.includes("all"));
+ const profile=LEVELS()?.getProfile(subjectKey,level),levels=config.levels||profile?.defaults?.levels||{simple:25,medium:35,complex:25,fusion:15};
+ const want=allocate(config.count||profile?.defaults?.count||15,levels),chosen=[],used=new Set(),seed=config.seed||Date.now();
+ ["simple","medium","complex","fusion"].forEach((difficulty,di)=>{
+  const candidates=shuffle(pool.filter(q=>q.difficulty===difficulty),seed+di*997);let need=want[difficulty]||0;
+  for(const q of candidates){if(!need)break;if(!used.has(q.id)){chosen.push(q);used.add(q.id);need--}}
+ });
+ if(chosen.length<(config.count||15)){
+  for(const q of shuffle(pool.filter(q=>!used.has(q.id)),seed+8081)){if(chosen.length>=(config.count||15))break;chosen.push(q);used.add(q.id)}
+ }
+ return {id:"pb-"+subjectKey+"-"+level+"-"+seed,subject:subjectKey,courseLevel:level,grading:config.grading||profile?.defaults?.grading||"standard",feedback:config.feedback||profile?.defaults?.feedback||"end",topics:config.topics&&config.topics.length?config.topics:s.topics,levels,count:chosen.length,requestedCount:config.count||15,createdAt:Date.now(),questions:shuffle(chosen,seed+191)};
 }
 const policies={
-  lenient:{name:"Lenient",desc:"Learning-first. Reattempts carry no penalty.",attempt:[1,1,1],revealPenalty:0},
-  standard:{name:"Standard",desc:"Second attempts receive reduced credit.",attempt:[1,.75,.5],revealPenalty:.25},
-  strict:{name:"Strict",desc:"Honors-style. First-attempt accuracy and independent reasoning matter.",attempt:[1,.5,0],revealPenalty:.5}
+ lenient:{name:"Lenient",desc:"Learning-first. Reattempts carry no penalty.",attempt:[1,1,1],revealPenalty:0},
+ standard:{name:"Standard",desc:"Second attempts receive reduced credit.",attempt:[1,.75,.5],revealPenalty:.25},
+ strict:{name:"Strict",desc:"Exam-style. First-attempt accuracy and independent reasoning matter.",attempt:[1,.5,0],revealPenalty:.5}
 };
 function scoreQuestion(session,qState,isCorrect){
-  if(!isCorrect)return 0;
-  const p=policies[session.grading]||policies.standard;
-  const a=Math.max(1,qState.attempts||1),base=p.attempt[Math.min(a-1,p.attempt.length-1)]||0;
-  return Math.max(0,base-(qState.revealed?p.revealPenalty:0));
+ if(!isCorrect)return 0;const p=policies[session.grading]||policies.standard,a=Math.max(1,qState.attempts||1),base=p.attempt[Math.min(a-1,p.attempt.length-1)]||0;
+ return Math.max(0,base-(qState.revealed?p.revealPenalty:0));
 }
 window.LEARNING_ATLAS_PRACTICE={
-  version:"1.0",
-  contract:{
-    description:"Shared practice-builder capability. Future subjects register a subject adapter with key, route, topics, pool and presets.",
-    difficulty:["simple","medium","complex","fusion"],
-    grading:["lenient","standard","strict"]
-  },
-  subjects,policies,build,scoreQuestion
+ version:"2.0",
+ contract:{description:"Shared level-aware practice capability. Future subjects register through the course-level engine.",difficulty:["simple","medium","complex","fusion"],grading:["lenient","standard","strict"],courseLevels:["cp","honors","ap"]},
+ subjects:{
+  get chemistry(){return subjectAdapter("chemistry",LEVELS()?.getLevel("chemistry"))},
+  get math(){return subjectAdapter("math",LEVELS()?.getLevel("math"))}
+ },
+ getSubject:subjectAdapter,policies,build,scoreQuestion
 };
 })();
